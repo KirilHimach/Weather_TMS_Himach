@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.weather_tms_himach.databinding.FragmentHomeBinding
 
     //TODO This`s test fragment.
+
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
