@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Weather_TMS_Himach</string>
-    <string name="title_home">Home</string>
+    <string name="title_login">Login</string>
+
+    <string name="username_or_email">Username or email</string>
+    <string name="password">Password</string>
+    <string name="weather">WEATHER</string>
+    <string name="log_in">Log In</string>
+    <string name="at_least_8_characters_and_one_in_upper_case">At least 8 characters and one in upper case</string>
 </resources>
