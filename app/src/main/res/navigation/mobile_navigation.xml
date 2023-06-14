@@ -3,13 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/loginFragment">
+    app:startDestination="@+id/SignInFragment">
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.weather_tms_himach.presentation.fragments.LoginFragment"
-        android:label="@string/title_login"
-        tools:layout="@layout/fragment_login" />
+        android:id="@+id/SignInFragment"
+        android:name="com.example.weather_tms_himach.presentation.fragments.login_fragments.SignInFragment"
+        android:label="@string/sign_in"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_SignInFragment_to_CreateAccountFragment"
+            app:destination="@id/CreateAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/CreateAccountFragment"
+        android:name="com.example.weather_tms_himach.presentation.fragments.login_fragments.CreateAccountFragment"
+        android:label="@string/create"
+        tools:layout="@layout/fragment_create_account" />
 
 
 </navigation>
