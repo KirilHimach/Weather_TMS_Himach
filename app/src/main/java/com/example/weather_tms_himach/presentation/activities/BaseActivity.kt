@@ -2,6 +2,7 @@ package com.example.weather_tms_himach.presentation.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.weather_tms_himach.BuildConfig
 import com.example.weather_tms_himach.databinding.ActivityMainBinding
 
 class BaseActivity : AppCompatActivity() {
