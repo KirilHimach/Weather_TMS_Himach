@@ -1,5 +1,9 @@
 package com.example.weather_tms_himach.di.base
 
+import com.example.weather_tms_himach.data.remote.api.CurrentConditionApi
+import com.example.weather_tms_himach.data.remote.api.FiveDaysForecastApi
+import com.example.weather_tms_himach.data.remote.api.GeolocationApi
+import com.example.weather_tms_himach.data.remote.api.TwelveHoursForecastApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -44,7 +48,7 @@ object ApiModule {
     @Singleton
     @Provides
     fun provideFiveDaysForApi(retrofit: Retrofit): FiveDaysForecastApi =
-        retrofit.create(FiveDaysForecastApi::clas.java)
+        retrofit.create(FiveDaysForecastApi::class.java)
 
     @Singleton
     @Provides

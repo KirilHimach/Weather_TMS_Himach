@@ -58,6 +58,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
 
+    implementation 'com.google.android.gms:play-services-location:21.0.1' //Location
+
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'

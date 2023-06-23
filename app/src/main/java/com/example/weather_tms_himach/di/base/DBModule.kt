@@ -2,6 +2,9 @@ package com.example.weather_tms_himach.di.base
 
 import android.app.Application
 import androidx.room.Room
+import com.example.weather_tms_himach.data.local.ForecastDatabase
+import com.example.weather_tms_himach.data.local.entities.City
+import com.example.weather_tms_himach.data.local.entities.FiveDaysFor
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
