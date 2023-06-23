@@ -6,9 +6,9 @@ import com.example.weather_tms_himach.data.local.dao.CityDao
 import com.example.weather_tms_himach.data.local.dao.FiveDaysForecastDao
 import com.example.weather_tms_himach.data.local.dao.ForecastDao
 import com.example.weather_tms_himach.data.local.entities.City
-import com.example.weather_tms_himach.data.local.entities.FiveDaysForecast
+import com.example.weather_tms_himach.data.local.entities.FiveDaysFor
 
-@Database(entities = [City::class, FiveDaysForecast::class], version = 1)
+@Database(entities = [City::class, FiveDaysFor::class], version = 1)
 abstract class ForecastDatabase : RoomDatabase() {
 
     abstract fun cityDao(): CityDao

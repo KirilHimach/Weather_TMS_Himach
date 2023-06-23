@@ -1,6 +1,6 @@
 package com.example.weather_tms_himach.data.remote.dto.five_days_forecast_dto
 
-import com.example.weather_tms_himach.data.local.entities.FiveDaysForecast
+import com.example.weather_tms_himach.data.local.entities.FiveDaysFor
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
  * In this case, the link is needed to retrieve the "locationKey".
  * This key is needed to link to tables.
  */
-data class FiveDaysForecastDto(
+data class FiveDaysForDto(
     @SerializedName("Date")
     val date: String,
     @SerializedName("Temperature")
@@ -49,12 +49,12 @@ data class FiveDaysForecastDto(
     )
 }
 
-fun FiveDaysForecastDto.toLocalForecast(): FiveDaysForecast {
+fun FiveDaysForDto.toLocalForecast(): FiveDaysFor {
     val locationKey = link
         .substringBefore("?")
         .substringAfterLast("/")
         .toLong()
-    return FiveDaysForecast(
+    return FiveDaysFor(
         date = date,
         tMin = temperature.minimum.value.toString(),
         tMax = temperature.maximum.value.toString(),

@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName
  * The "Pressure" contains two formats, Metric(md) and Imperial(inHg).
  * WeatherText - "Sunny".
  */
-data class CurrentConditionDto(
+data class CurrentCondDto(
     @SerializedName("WeatherText")
     val weatherText: String,
     @SerializedName("WeatherIcon")
@@ -39,15 +39,15 @@ data class CurrentConditionDto(
         data class Metric(
             @SerializedName("Value")
             val value: Double,
-            @SerializedName("Phrase")
-            val phrase: String
+            @SerializedName("Unit")
+            val unit: String
         )
 
         data class Imperial(
             @SerializedName("Value")
             val value: Double,
-            @SerializedName("Phrase")
-            val phrase: String
+            @SerializedName("Unit")
+            val unit: String
         )
     }
 

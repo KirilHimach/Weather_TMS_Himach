@@ -1,7 +1,7 @@
 package com.example.weather_tms_himach.data.remote.api
 
 import com.example.weather_tms_himach.BuildConfig
-import com.example.weather_tms_himach.data.remote.dto.geolocation_dto.GeolocationResponseDto
+import com.example.weather_tms_himach.data.remote.dto.geolocation_dto.GeolocationRespDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -30,5 +30,5 @@ interface GeolocationApi {
         @Query(GEO_PARAM) latAndLon: String,
         @Query(LANGUAGE_PARAM) language: String,
         @Query(TOP_LEVEL_PARAM) topLevel: String = TOP_LEVEL
-    ): GeolocationResponseDto
+    ): GeolocationRespDto
 }

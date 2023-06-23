@@ -1,7 +1,7 @@
 package com.example.weather_tms_himach.data.remote.api
 
 import com.example.weather_tms_himach.BuildConfig
-import com.example.weather_tms_himach.data.remote.dto.five_days_forecast_dto.FiveDaysForecastResponseDto
+import com.example.weather_tms_himach.data.remote.dto.five_days_forecast_dto.FiveDaysForRespDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -29,5 +29,5 @@ interface FiveDaysForecastApi {
         @Query(KEY_PARAM) apiKey: String = API_KEY,
         @Query(LANGUAGE_PARAM) language: String,
         @Query(METRIC_PARAM) metric: Boolean
-    ): FiveDaysForecastResponseDto
+    ): FiveDaysForRespDto
 }

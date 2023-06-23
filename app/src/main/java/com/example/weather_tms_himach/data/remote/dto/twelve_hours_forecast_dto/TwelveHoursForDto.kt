@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 /**
  * This model serves to deserialize the 12-hour forecast of the weather.
  */
-data class TwelveHoursForecastDto(
-    @SerializedName("EpochDateTime")
-    val epochDateTime: Int,
+data class TwelveHoursForDto(
+    @SerializedName("DateTime")
+    val dateTime: String,
     @SerializedName("WeatherIcon")
     val weatherIcon: Int,
     @SerializedName("Temperature")

@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class FiveDaysForecast(
+data class FiveDaysFor(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
     @ColumnInfo("date")
