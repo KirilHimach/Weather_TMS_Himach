@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">Weather_TMS_Himach</string>
-    <string name="title_home">Home</string>
+
+    <string name="username_or_email">Username or email</string>
+    <string name="password">Password</string>
+    <string name="weather">WEATHER</string>
+    <string name="log_in">Log In</string>
+    <string name="at_least_8_characters_and_one_in_upper_case">At least 8 characters and one in upper case</string>
+    <string name="create_account">Create an account</string>
+    <string name="username_incorrect">Username is incorrect!</string>
+    <string name="username_or_password_is_incorrect">Username or password is incorrect!</string>
+    <string name="create_my_account">Create my account</string>
+    <string name="sign_in">SignIn</string>
+    <string name="create">Create</string>
+    <string name="email">email@</string>
 </resources>
