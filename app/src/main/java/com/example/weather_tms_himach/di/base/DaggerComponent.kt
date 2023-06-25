@@ -26,6 +26,7 @@ interface DaggerComponent {
     fun inject(fragment: CreateAccountFragment)
     fun inject(fragment: SignInFragment)
 
+    @Component.Factory
     interface Factory {
         fun create(@BindsInstance application: Application): DaggerComponent
     }
