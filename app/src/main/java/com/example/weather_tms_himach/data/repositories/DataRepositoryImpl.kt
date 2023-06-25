@@ -8,6 +8,7 @@ import com.example.weather_tms_himach.data.repositories.remote.current_condition
 import com.example.weather_tms_himach.data.repositories.remote.five_days_forecast_remote.FiveDaysForRem
 import com.example.weather_tms_himach.data.repositories.remote.geolocation_remote.GeolocationRem
 import com.example.weather_tms_himach.data.repositories.remote.twelve_hours_forecast_remote.TwelveHoursForRem
+import com.example.weather_tms_himach.domain.repositories.WeatherRepo
 import javax.inject.Inject
 
 class DataRepositoryImpl @Inject constructor(
@@ -15,30 +16,34 @@ class DataRepositoryImpl @Inject constructor(
     private val fiveDaysForRem: FiveDaysForRem,
     private val geolocationRem: GeolocationRem,
     private val twelveHoursForRem: TwelveHoursForRem
-) {
-    suspend fun getRemCurCond(): List<CurrentCondDto> =
+) : WeatherRepo {
+    override suspend fun getRemCurCond(): List<CurrentCondDto> =
         currentCondRem.getCurrentCond(
             key = "28580", //TODO
             language = "en"
         ).currentCondDto
 
-    suspend fun getRemFiveDaysFor(): List<FiveDaysForDto> =
+    override suspend fun getRemFiveDaysFor(): List<FiveDaysForDto> =
         fiveDaysForRem.getFiveDaysFor(
             key = "28580", //TODO
             language = "en",
             metric = true
         ).fiveDaysForecastDto
 
-    suspend fun getRemGeo(): GeolocationDto =
+    override suspend fun getRemGeo(): GeolocationDto =
         geolocationRem.getGeo(
             latAndLon = "53.9,27.56", //TODO
             language = "en"
         ).geolocationDto
 
-    suspend fun getRemTweHouFor(): List<TwelveHoursForDto> =
+    override suspend fun getRemTweHouFor(): List<TwelveHoursForDto> =
         twelveHoursForRem.getTwelveHoursFor(
             key = "28580", //TODO
             language = "en",
             metric = true
         ).twelveHoursForDto
+
+    override suspend fun getLocFor() {
+        TODO("Not yet implemented")
+    }
 }
