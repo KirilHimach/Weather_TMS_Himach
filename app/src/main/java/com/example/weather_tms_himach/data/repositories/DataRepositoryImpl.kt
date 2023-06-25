@@ -16,26 +16,26 @@ class DataRepositoryImpl @Inject constructor(
     private val geolocationRem: GeolocationRem,
     private val twelveHoursForRem: TwelveHoursForRem
 ) {
-    suspend fun getRemCurCond(): List<CurrentCondDto> =
+    suspend fun getRemCurCond(): List<CurrentCondDto>? =
         currentCondRem.getCurrentCond(
             key = "28580", //TODO
             language = "en"
         ).currentCondDto
 
-    suspend fun getRemFiveDaysFor(): List<FiveDaysForDto> =
+    suspend fun getRemFiveDaysFor(): List<FiveDaysForDto>? =
         fiveDaysForRem.getFiveDaysFor(
             key = "28580", //TODO
             language = "en",
             metric = true
         ).fiveDaysForecastDto
 
-    suspend fun getRemGeo(): GeolocationDto =
+    suspend fun getRemGeo(): GeolocationDto? =
         geolocationRem.getGeo(
             latAndLon = "53.9,27.56", //TODO
             language = "en"
         ).geolocationDto
 
-    suspend fun getRemTweHouFor(): List<TwelveHoursForDto> =
+    suspend fun getRemTweHouFor(): List<TwelveHoursForDto>? =
         twelveHoursForRem.getTwelveHoursFor(
             key = "28580", //TODO
             language = "en",
