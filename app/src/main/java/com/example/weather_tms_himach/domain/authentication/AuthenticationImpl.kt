@@ -8,7 +8,6 @@ import com.google.firebase.ktx.Firebase
  * This class allows the user to create,
  * validate, or log out of an account.
  */
-//TODO Singleton
 class AuthenticationImpl : Authentication {
     private var auth: FirebaseAuth = Firebase.auth
 
