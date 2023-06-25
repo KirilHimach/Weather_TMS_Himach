@@ -7,9 +7,9 @@ import com.example.weather_tms_himach.data.remote.dto.twelve_hours_forecast_dto.
 
 
 interface WeatherRepo {
-    suspend fun getRemCurCond(): List<CurrentCondDto>
-    suspend fun getRemFiveDaysFor(): List<FiveDaysForDto>
-    suspend fun getRemGeo(): GeolocationDto
-    suspend fun getRemTweHouFor(): List<TwelveHoursForDto>
+    suspend fun getRemCurCond(): List<CurrentCondDto>?
+    suspend fun getRemFiveDaysFor(): List<FiveDaysForDto>?
+    suspend fun getRemGeo(): GeolocationDto?
+    suspend fun getRemTweHouFor(): List<TwelveHoursForDto>?
     suspend fun getLocFor()
 }
