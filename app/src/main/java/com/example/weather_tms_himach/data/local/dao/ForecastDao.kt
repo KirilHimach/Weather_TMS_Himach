@@ -9,5 +9,5 @@ import com.example.weather_tms_himach.data.local.models.Forecast
 @Dao
 interface ForecastDao {
 
-    suspend fun getForecast(): Forecast
+   // suspend fun getForecast(): Forecast
 }
