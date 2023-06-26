@@ -9,16 +9,16 @@
         android:id="@+id/SignInFragment"
         android:name="com.example.weather_tms_himach.presentation.fragments.login_fragments.SignInFragment"
         android:label="@string/sign_in"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_sign_in" >
         <action
-            android:id="@+id/action_SignInFragment_to_CreateAccountFragment"
-            app:destination="@id/CreateAccountFragment" />
+            android:id="@+id/action_SignInFragment_to_SignUpFragment"
+            app:destination="@id/SignUpFragment" />
     </fragment>
     <fragment
-        android:id="@+id/CreateAccountFragment"
-        android:name="com.example.weather_tms_himach.presentation.fragments.login_fragments.CreateAccountFragment"
-        android:label="@string/create"
-        tools:layout="@layout/fragment_create_account" />
+        android:id="@+id/SignUpFragment"
+        android:name="com.example.weather_tms_himach.presentation.fragments.login_fragments.SignUpFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_sign_up" />
 
 
 </navigation>

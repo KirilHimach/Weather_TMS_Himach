@@ -6,24 +6,46 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.weather_tms_himach.R
-import com.example.weather_tms_himach.databinding.FragmentCreateAccountBinding
+import com.example.weather_tms_himach.databinding.FragmentSignUpBinding
+import com.example.weather_tms_himach.di.base.DaggerDaggerComponent
+import com.example.weather_tms_himach.di.modules.ViewModelFactory
+import com.example.weather_tms_himach.presentation.view_models.SignUpViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import java.lang.IllegalStateException
+import javax.inject.Inject
 
 /**
  * This is the second fragment of the application.
  * The user can be create account by login and password.
  */
-//TODO I`ll mace other functional after injection dependency
-class CreateAccountFragment : Fragment() {
+class SignUpFragment : Fragment() {
 
-    private lateinit var binding: FragmentCreateAccountBinding
+    private lateinit var binding: FragmentSignUpBinding
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private var _signUpViewModel: SignUpViewModel? = null
+    private val signUpViewModel: SignUpViewModel
+        get() =
+            _signUpViewModel ?: throw IllegalStateException("SignUpViewModel is not found")
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.application?.let {
+            DaggerDaggerComponent.factory().create(it).inject(this)
+        }
+        _signUpViewModel = viewModelFactory.create(SignUpViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCreateAccountBinding.inflate(
+        binding = FragmentSignUpBinding.inflate(
             inflater,
             container,
             false
@@ -40,6 +62,8 @@ class CreateAccountFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        accountObserver()
+        eventsObserver()
         var login = ""
         var password = ""
         binding.loginEditText.doAfterTextChanged { _login ->
@@ -53,7 +77,7 @@ class CreateAccountFragment : Fragment() {
             onBtnEnable(login, password)
         }
         binding.createBtn.setOnClickListener {
-            onCreateUser(login, password)
+            onCreateAccount(login, password)
         }
     }
 
@@ -62,14 +86,8 @@ class CreateAccountFragment : Fragment() {
      * if the data is entered correctly,
      * it will automatically move to the next fragment.
      */
-    private fun onCreateUser(name: String, password: String) {
-//TODO
-//        if (true) {
-//            findNavController().navigate()
-//        } else {
-//            binding.loginView.error
-//            binding.passwordView.error = getString(R.string.username_or_password_is_incorrect)
-//        }
+    private fun onCreateAccount(email: String, password: String) {
+        signUpViewModel.onSignUp(email = email, password = password)
     }
 
     /**
@@ -86,5 +104,26 @@ class CreateAccountFragment : Fragment() {
     private fun isCheckPassword(password: String): Boolean {
         val pattern = "[A-Z]".toRegex()
         return pattern.containsMatchIn(password) && password.length >= 8
+    }
+
+    private fun accountObserver() {
+        signUpViewModel.accounts.observe(viewLifecycleOwner) { newAccount ->
+            newAccount?.let {
+                //TODO: navigate to the next fragment
+             //   findNavController().navigate(R.id.action_SignInFragment_to_SignUpFragment)
+            }
+        }
+    }
+    private fun eventsObserver() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            signUpViewModel.allEvents.collect() { error ->
+                when (error) {
+                    is SignUpViewModel.Events.Error -> {
+                        binding.passwordView.error =
+                            getString(R.string.username_or_password_is_incorrect)
+                    }
+                }
+            }
+        }
     }
 }

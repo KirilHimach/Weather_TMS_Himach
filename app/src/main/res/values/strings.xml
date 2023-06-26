@@ -11,6 +11,6 @@
     <string name="username_or_password_is_incorrect">Username or password is incorrect!</string>
     <string name="create_my_account">Create my account</string>
     <string name="sign_in">SignIn</string>
-    <string name="create">Create</string>
+    <string name="sign_up">SignUp</string>
     <string name="email">email@</string>
 </resources>

@@ -6,9 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.weather_tms_himach.R
-import com.example.weather_tms_himach.databinding.FragmentLoginBinding
+import com.example.weather_tms_himach.databinding.FragmentSignInBinding
+import com.example.weather_tms_himach.di.base.DaggerDaggerComponent
+import com.example.weather_tms_himach.di.modules.ViewModelFactory
+import com.example.weather_tms_himach.presentation.view_models.SignInViewModel
+import kotlinx.coroutines.launch
+import java.lang.IllegalStateException
+import javax.inject.Inject
 
 /**
  * This is the first fragment of the application.
@@ -21,14 +28,28 @@ class SignInFragment : Fragment() {
     private val mail = "sun@mail.com" //TODO real account on Firebase
     private val password = "qazQwsx"  //TODO real account on Firebase
 
-    private lateinit var binding: FragmentLoginBinding
-    //private val signInViewModel: SignInViewModel by viewModel()
+    private lateinit var binding: FragmentSignInBinding
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private var _signInViewModel: SignInViewModel? = null
+    private val signInViewModel: SignInViewModel
+        get() =
+            _signInViewModel ?: throw IllegalStateException("SignInViewModel is not found")
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.application?.let {
+            DaggerDaggerComponent.factory().create(it).inject(this)
+        }
+        _signInViewModel = viewModelFactory.create(SignInViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding = FragmentSignInBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,7 +61,9 @@ class SignInFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // isCurrentUser()
+        signInViewModel.onSignOut() //TODO: Log out
+        eventsObserver()
+        userObserver()
         var login = ""
         binding.loginEditText.doAfterTextChanged { _login ->
             binding.loginView.error = null
@@ -51,31 +74,35 @@ class SignInFragment : Fragment() {
             onSignIn(login)
         }
         binding.createBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_SignInFragment_to_CreateAccountFragment)
+            findNavController().navigate(R.id.action_SignInFragment_to_SignUpFragment)
         }
-    }
-
-    /**
-     * This method checks the current user.
-     */
-    private fun isCurrentUser() {
-//        if (currentUser != null) {
-//            //   findNavController().navigate(nextFragment) //TODO action
-//        } else return
     }
 
     /**
      * This method makes a request to the firebase,
      * if the user exists, it will automatically move to the next fragment.
      */
-    private fun onSignIn(name: String) {
+    private fun onSignIn(email: String) {
+        signInViewModel.onSignIn(email = email, password = password)
+    }
 
-        //TODO request to Firebase
-
-//            if (true) {
-//                //   findNavController().navigate(nextFragment) //TODO action
-//            } else {
-//                binding.loginView.error = getString(R.string.username_incorrect)
-//            }
+    private fun userObserver() {
+        signInViewModel.authUser.observe(viewLifecycleOwner) { user ->
+            user?.let {
+                //TODO: move to the next fragment
+                findNavController().navigate(R.id.action_SignInFragment_to_SignUpFragment)
+            }
+        }
+    }
+    private fun eventsObserver() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            signInViewModel.allEvents.collect() { error ->
+                when (error) {
+                    is SignInViewModel.Events.Error -> {
+                        binding.loginView.error = getString(R.string.username_incorrect)
+                    }
+                }
+            }
+        }
     }
 }
