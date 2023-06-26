@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "743930032893",
+    "project_id": "weathertmshimach",
+    "storage_bucket": "weathertmshimach.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743930032893:android:3a8b9eb8da751865938494",
+        "android_client_info": {
+          "package_name": "com.example.weather_tms_himach"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743930032893-94mnk3g0ehqeucqlumlhtma3lbhms8pi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.weather_tms_himach",
+            "certificate_hash": "409a3774d2ddace89ae494ba615c96f722ac272e"
+          }
+        },
+        {
+          "client_id": "743930032893-ktkf2hakghuj2iu3psco8nltqeo9l1eu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZgz-FWKiCuzYEZkKEU7-p42fb7rYMWvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743930032893-ktkf2hakghuj2iu3psco8nltqeo9l1eu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
