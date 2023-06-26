@@ -1,5 +1,6 @@
 package com.example.weather_tms_himach.data.remote.dto.current_condition_dto
 
+import com.example.weather_tms_himach.domain.models.CurrentCondition
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -32,18 +33,9 @@ data class CurrentCondDto(
 ) {
     data class RealFeelTemperature(
         @SerializedName("Metric")
-        val metric: Metric,
-        @SerializedName("Imperial")
-        val imperial: Imperial
+        val metric: Metric
     ) {
         data class Metric(
-            @SerializedName("Value")
-            val value: Double,
-            @SerializedName("Unit")
-            val unit: String
-        )
-
-        data class Imperial(
             @SerializedName("Value")
             val value: Double,
             @SerializedName("Unit")
@@ -58,18 +50,9 @@ data class CurrentCondDto(
     ) {
         data class Speed(
             @SerializedName("Metric")
-            val metric: Metric,
-            @SerializedName("Imperial")
-            val imperial: Imperial
+            val metric: Metric
         ) {
             data class Metric(
-                @SerializedName("Value")
-                val value: Double,
-                @SerializedName("Unit")
-                val unit: String
-            )
-
-            data class Imperial(
                 @SerializedName("Value")
                 val value: Double,
                 @SerializedName("Unit")
@@ -81,18 +64,9 @@ data class CurrentCondDto(
 
     data class Visibility(
         @SerializedName("Metric")
-        val metric: Metric,
-        @SerializedName("Imperial")
-        val imperial: Imperial
+        val metric: Metric
     ) {
         data class Metric(
-            @SerializedName("Value")
-            val value: Double,
-            @SerializedName("Unit")
-            val unit: String
-        )
-
-        data class Imperial(
             @SerializedName("Value")
             val value: Double,
             @SerializedName("Unit")
@@ -103,18 +77,9 @@ data class CurrentCondDto(
 
     data class Pressure(
         @SerializedName("Metric")
-        val metric: Metric,
-        @SerializedName("Imperial")
-        val imperial: Imperial
+        val metric: Metric
     ) {
         data class Metric(
-            @SerializedName("Value")
-            val value: Double,
-            @SerializedName("Unit")
-            val unit: String
-        )
-
-        data class Imperial(
             @SerializedName("Value")
             val value: Double,
             @SerializedName("Unit")
@@ -125,9 +90,7 @@ data class CurrentCondDto(
 
     data class ApparentTemperature(
         @SerializedName("Metric")
-        val metric: Metric,
-        @SerializedName("Imperial")
-        val imperial: Imperial
+        val metric: Metric
     ) {
         data class Metric(
             @SerializedName("Value")
@@ -135,12 +98,23 @@ data class CurrentCondDto(
             @SerializedName("Unit")
             val unit: String
         )
-
-        data class Imperial(
-            @SerializedName("Value")
-            val value: Double,
-            @SerializedName("Unit")
-            val unit: String
-        )
     }
 }
+
+fun CurrentCondDto.toCurrentCondition() =
+    CurrentCondition(
+        weatherText = weatherText,
+        weatherIcon = weatherIcon,
+        realFellTempMetVal = realFeelTemperature.metric.value,
+        realFellTempMetUn = realFeelTemperature.metric.unit,
+        relativeHumidity = relativeHumidity,
+        windSpeedMetVal = wind.speed.metric.value,
+        windSpeedMetUn = wind.speed.metric.unit,
+        uVIndex = uVIndex,
+        visibilityMetVal = visibility.metric.value,
+        visibilityMetUn = visibility.metric.unit,
+        pressureMetVal = pressure.metric.value,
+        pressureMetUn = pressure.metric.unit,
+        apparentTempMetVal = apparentTemperature.metric.value,
+        apparentTempMetUn = apparentTemperature.metric.unit
+    )

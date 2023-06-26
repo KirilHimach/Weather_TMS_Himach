@@ -5,7 +5,7 @@ import com.example.weather_tms_himach.di.modules.UseCasesModule
 import com.example.weather_tms_himach.di.modules.ViewModelModule
 import com.example.weather_tms_himach.di.modules.repositories.DataRepoModule
 import com.example.weather_tms_himach.di.modules.repositories.RemRepoModule
-import com.example.weather_tms_himach.presentation.fragments.login_fragments.CreateAccountFragment
+import com.example.weather_tms_himach.presentation.fragments.login_fragments.SignUpFragment
 import com.example.weather_tms_himach.presentation.fragments.login_fragments.SignInFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -19,11 +19,12 @@ import javax.inject.Singleton
         DataRepoModule::class,
         RemRepoModule::class,
         UseCasesModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        Auth::class
     ]
 )
 interface DaggerComponent {
-    fun inject(fragment: CreateAccountFragment)
+    fun inject(fragment: SignUpFragment)
     fun inject(fragment: SignInFragment)
 
     @Component.Factory

@@ -1,5 +1,6 @@
 package com.example.weather_tms_himach.data.remote.dto.twelve_hours_forecast_dto
 
+import com.example.weather_tms_himach.domain.models.TwelveHoursForecast
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -18,3 +19,9 @@ data class TwelveHoursForDto(
         val value: Double
     )
 }
+
+fun TwelveHoursForDto.toTwelveHoursForecast() =
+    TwelveHoursForecast(
+        weatherIcon = weatherIcon,
+        temperature = temperature.value
+    )

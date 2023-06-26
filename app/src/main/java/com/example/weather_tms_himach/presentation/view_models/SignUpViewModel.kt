@@ -12,37 +12,25 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-class SignInViewModel @Inject constructor(
+class SignUpViewModel @Inject constructor(
     private val auth: Auth
 ) : ViewModel() {
-    private val _authUser = MutableLiveData<FirebaseUser>()
-    val authUser: LiveData<FirebaseUser> = _authUser
+    private var _accounts = MutableLiveData<FirebaseUser>()
+    val accounts: LiveData<FirebaseUser> = _accounts
     private val eventsChanel = Channel<Events>()
     val allEvents = eventsChanel.receiveAsFlow()
 
-    init {
-        viewModelScope.launch {
-            isCurrentUser()
-        }
-    }
-
-    fun onSignIn(email: String, password: String) = viewModelScope.launch {
+    fun onSignUp(
+        email: String, password: String
+    ) = viewModelScope.launch {
         try {
-            val user= auth.signIn(email = email, password = password)
-            user.let {
-                _authUser.postValue(it)
+            val newAccount = auth.createAccount(email = email, password = password)
+            newAccount.let {
+                _accounts.postValue(it)
             }
         } catch (e: Exception) {
             eventsChanel.send(Events.Error(e.toString()))
         }
-    }
-
-    fun onSignOut() = viewModelScope.launch {
-        auth.signOut()
-    }
-
-    private suspend fun isCurrentUser() {
-        _authUser.value = auth.getUser()
     }
 
     sealed class Events {

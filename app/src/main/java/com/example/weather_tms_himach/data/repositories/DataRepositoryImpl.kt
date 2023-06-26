@@ -17,18 +17,18 @@ class DataRepositoryImpl @Inject constructor(
     private val geolocationRem: GeolocationRem,
     private val twelveHoursForRem: TwelveHoursForRem
 ) : WeatherRepo {
-    override suspend fun getRemCurCond(): List<CurrentCondDto>? =
+    override suspend fun getRemCurCond(): List<CurrentCondDto> =
         currentCondRem.getCurrentCond(
             key = "28580", //TODO
             language = "en"
-        ).currentCondDto
+        ).currentCondDto.orEmpty()
 
-    override suspend fun getRemFiveDaysFor(): List<FiveDaysForDto>? =
+    override suspend fun getRemFiveDaysFor(): List<FiveDaysForDto> =
         fiveDaysForRem.getFiveDaysFor(
             key = "28580", //TODO
             language = "en",
             metric = true
-        ).fiveDaysForecastDto
+        ).fiveDaysForecastDto.orEmpty()
 
     override suspend fun getRemGeo(): GeolocationDto? =
         geolocationRem.getGeo(
@@ -36,12 +36,12 @@ class DataRepositoryImpl @Inject constructor(
             language = "en"
         ).geolocationDto
 
-    override suspend fun getRemTweHouFor(): List<TwelveHoursForDto>? =
+    override suspend fun getRemTweHouFor(): List<TwelveHoursForDto> =
         twelveHoursForRem.getTwelveHoursFor(
             key = "28580", //TODO
             language = "en",
             metric = true
-        ).twelveHoursForDto
+        ).twelveHoursForDto.orEmpty()
 
     override suspend fun getLocFor() {
         TODO("Not yet implemented")

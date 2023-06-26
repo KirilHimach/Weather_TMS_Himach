@@ -1,6 +1,7 @@
 package com.example.weather_tms_himach.data.remote.dto.geolocation_dto
 
 import com.example.weather_tms_himach.data.local.entities.City
+import com.example.weather_tms_himach.domain.models.Geolocation
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -19,6 +20,11 @@ data class GeolocationDto(
 fun GeolocationDto.toLocalCity() =
     City(
         id = locationKey.toLong(),
+        city = city
+    )
+
+fun GeolocationDto.toGeolocation() =
+    Geolocation(
         city = city
     )
 

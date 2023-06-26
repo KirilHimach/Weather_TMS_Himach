@@ -1,6 +1,7 @@
 package com.example.weather_tms_himach.data.remote.dto.five_days_forecast_dto
 
 import com.example.weather_tms_himach.data.local.entities.FiveDaysFor
+import com.example.weather_tms_himach.domain.models.FiveDaysForecast
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -63,3 +64,12 @@ fun FiveDaysForDto.toLocalForecast(): FiveDaysFor {
         cityId = locationKey
     )
 }
+
+fun FiveDaysForDto.toFiveDaysForecast() =
+    FiveDaysForecast(
+        dayOfWeek = date,
+        temperatureMin = temperature.minimum.value,
+        temperatureMax = temperature.maximum.value,
+        dayIcon = day.icon,
+        nightIcon = night.icon
+    )
