@@ -1,15 +1,27 @@
 package com.example.weather_tms_himach.domain.repositories
 
-import com.example.weather_tms_himach.data.remote.dto.current_condition_dto.CurrentCondDto
-import com.example.weather_tms_himach.data.remote.dto.five_days_forecast_dto.FiveDaysForDto
-import com.example.weather_tms_himach.data.remote.dto.geolocation_dto.GeolocationDto
-import com.example.weather_tms_himach.data.remote.dto.twelve_hours_forecast_dto.TwelveHoursForDto
+import com.example.weather_tms_himach.data.remote.dto.CurrentCondDto
+import com.example.weather_tms_himach.data.remote.dto.FiveDaysForDto
+import com.example.weather_tms_himach.data.remote.dto.GeolocationDto
+import com.example.weather_tms_himach.data.remote.dto.TwelveHoursForDto
 
 
 interface WeatherRepo {
-    suspend fun getRemCurCond(): List<CurrentCondDto>?
-    suspend fun getRemFiveDaysFor(): List<FiveDaysForDto>?
-    suspend fun getRemGeo(): GeolocationDto?
-    suspend fun getRemTweHouFor(): List<TwelveHoursForDto>?
+    suspend fun getRemCurCond(
+        locationKey: String, language: String
+    ): List<CurrentCondDto>?
+
+    suspend fun getRemFiveDaysFor(
+        locationKey: String, language: String, metric: Boolean
+    ): FiveDaysForDto?
+
+    suspend fun getRemGeo(
+        latAndLon: String, language: String
+    ): GeolocationDto?
+
+    suspend fun getRemTweHouFor(
+        locationKey: String, language: String, metric: Boolean
+    ): List<TwelveHoursForDto>?
+
     suspend fun getLocFor()
 }

@@ -1,9 +1,10 @@
 package com.example.weather_tms_himach.data.repositories.remote.current_condition_remote
 
-import com.example.weather_tms_himach.data.remote.dto.current_condition_dto.CurrentCondRespDto
+import com.example.weather_tms_himach.data.remote.dto.CurrentCondDto
+import retrofit2.Response
 
 interface CurrentCondRem {
     suspend fun getCurrentCond(
-        key: String, language: String
-    ): CurrentCondRespDto
+        locationKey: String, language: String
+    ): Response<List<CurrentCondDto>>?
 }

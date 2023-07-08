@@ -1,16 +1,17 @@
 package com.example.weather_tms_himach.data.repositories.remote.geolocation_remote
 
-import com.example.weather_tms_himach.data.remote.api.GeolocationApi
-import com.example.weather_tms_himach.data.remote.dto.geolocation_dto.GeolocationRespDto
+import com.example.weather_tms_himach.data.remote.api.ForecastApi
+import com.example.weather_tms_himach.data.remote.dto.GeolocationDto
+import retrofit2.Response
 import javax.inject.Inject
 
 class GeolocationRemImpl @Inject constructor(
-    private val geolocationApi: GeolocationApi
+    private val forecastApi: ForecastApi
 ) : GeolocationRem {
     override suspend fun getGeo(
         latAndLon: String, language: String
-    ): GeolocationRespDto =
-        geolocationApi.getCityApi(
+    ): Response<GeolocationDto>? =
+        forecastApi.getCityApi(
             latAndLon = latAndLon,
             language = language
         )

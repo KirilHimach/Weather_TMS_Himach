@@ -1,20 +1,36 @@
 package com.example.weather_tms_himach.domain.authentication
 
 import com.google.firebase.auth.FirebaseUser
-import javax.inject.Inject
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
 
-class AuthImpl @Inject constructor(
-    private val baseAuth: BaseAuth
-) : Auth {
-    override suspend fun signIn(email: String, password: String): FirebaseUser? =
-        baseAuth.signInWithEmailAndPassword(email = email, password = password)
+/**
+ * This class allows the user to create,
+ * validate, or log out of an account.
+ */
+class AuthImpl : Auth {
 
-    override suspend fun createAccount(email: String, password: String): FirebaseUser? =
-        baseAuth.createUserWithEmailAndPassword(email = email, password = password)
+    override suspend fun signInWithEmailAndPassword(
+        email: String, password: String
+    ): FirebaseUser? {
+        Firebase.auth.signInWithEmailAndPassword(email, password).await()
+        return Firebase.auth.currentUser
+    }
 
-    override fun signOut(): FirebaseUser? =
-        baseAuth.signOut()
+    override suspend fun createUserWithEmailAndPassword(
+        email: String, password: String
+    ): FirebaseUser? {
+        Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+        return Firebase.auth.currentUser
+    }
 
-    override suspend fun getUser(): FirebaseUser? =
-        baseAuth.getUser()
+    override fun signOut(): FirebaseUser? {
+        Firebase.auth.signOut()
+        return Firebase.auth.currentUser
+    }
+
+    override suspend fun getUser(): FirebaseUser? {
+        return Firebase.auth.currentUser
+    }
 }

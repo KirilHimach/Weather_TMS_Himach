@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Weather_TMS_Himach</string>
-
     <string name="username_or_email">Username or email</string>
     <string name="password">Password</string>
     <string name="weather">WEATHER</string>
@@ -12,5 +12,16 @@
     <string name="create_my_account">Create my account</string>
     <string name="sign_in">SignIn</string>
     <string name="sign_up">SignUp</string>
+    <string name="forecast">Forecast</string>
     <string name="email">email@</string>
+    <string name="twelve_hours_forecast">Forecast for 12 hours</string>
+    <string name="forecast_for_5_days">Forecast for 5 days</string>
+    <string name="degree_sign">\u00B0</string>
+    <string name="percent">\u0025</string>
+    <string name="uv_index">UV-index</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="visibility">Visibility</string>
+    <string name="pressure">Pressure</string>
+    <string name="apparent">Apparent</string>
 </resources>

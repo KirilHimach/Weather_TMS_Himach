@@ -7,18 +7,36 @@
 
     <fragment
         android:id="@+id/SignInFragment"
-        android:name="com.example.weather_tms_himach.presentation.fragments.login_fragments.SignInFragment"
+        android:name="com.example.weather_tms_himach.presentation.fragments.SignInFragment"
         android:label="@string/sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
             android:id="@+id/action_SignInFragment_to_SignUpFragment"
-            app:destination="@id/SignUpFragment" />
+            app:destination="@id/SignUpFragment"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_SignInFragment_to_ForecastFragment"
+            app:destination="@id/ForecastFragment"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/SignUpFragment"
-        android:name="com.example.weather_tms_himach.presentation.fragments.login_fragments.SignUpFragment"
+        android:name="com.example.weather_tms_himach.presentation.fragments.SignUpFragment"
         android:label="@string/sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_SignUpFragment_to_ForecastFragment"
+            app:destination="@id/ForecastFragment"
+            app:popUpTo="@id/mobile_navigation"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/ForecastFragment"
+        android:name="com.example.weather_tms_himach.presentation.fragments.ForecastFragment"
+        android:label="@string/forecast"
+        tools:layout="@layout/fragment_forecast" />
 
 
 </navigation>

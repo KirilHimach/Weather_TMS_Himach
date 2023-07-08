@@ -1,9 +1,9 @@
 package com.example.weather_tms_himach.data.repositories
 
-import com.example.weather_tms_himach.data.remote.dto.current_condition_dto.CurrentCondDto
-import com.example.weather_tms_himach.data.remote.dto.five_days_forecast_dto.FiveDaysForDto
-import com.example.weather_tms_himach.data.remote.dto.geolocation_dto.GeolocationDto
-import com.example.weather_tms_himach.data.remote.dto.twelve_hours_forecast_dto.TwelveHoursForDto
+import com.example.weather_tms_himach.data.remote.dto.CurrentCondDto
+import com.example.weather_tms_himach.data.remote.dto.FiveDaysForDto
+import com.example.weather_tms_himach.data.remote.dto.GeolocationDto
+import com.example.weather_tms_himach.data.remote.dto.TwelveHoursForDto
 import com.example.weather_tms_himach.data.repositories.remote.current_condition_remote.CurrentCondRem
 import com.example.weather_tms_himach.data.repositories.remote.five_days_forecast_remote.FiveDaysForRem
 import com.example.weather_tms_himach.data.repositories.remote.geolocation_remote.GeolocationRem
@@ -17,31 +17,39 @@ class DataRepositoryImpl @Inject constructor(
     private val geolocationRem: GeolocationRem,
     private val twelveHoursForRem: TwelveHoursForRem
 ) : WeatherRepo {
-    override suspend fun getRemCurCond(): List<CurrentCondDto> =
+    override suspend fun getRemCurCond(
+        locationKey: String, language: String
+    ): List<CurrentCondDto>? =
         currentCondRem.getCurrentCond(
-            key = "28580", //TODO
-            language = "en"
-        ).currentCondDto.orEmpty()
+            locationKey = locationKey,
+            language = language
+        )?.body()
 
-    override suspend fun getRemFiveDaysFor(): List<FiveDaysForDto> =
+    override suspend fun getRemFiveDaysFor(
+        locationKey: String, language: String, metric: Boolean
+    ): FiveDaysForDto? =
         fiveDaysForRem.getFiveDaysFor(
-            key = "28580", //TODO
-            language = "en",
-            metric = true
-        ).fiveDaysForecastDto.orEmpty()
+            locationKey = locationKey,
+            language = language,
+            metric = metric
+        )?.body()
 
-    override suspend fun getRemGeo(): GeolocationDto? =
+    override suspend fun getRemGeo(
+        latAndLon: String, language: String
+    ): GeolocationDto? =
         geolocationRem.getGeo(
-            latAndLon = "53.9,27.56", //TODO
-            language = "en"
-        ).geolocationDto
+            latAndLon = latAndLon,
+            language = language
+        )?.body()
 
-    override suspend fun getRemTweHouFor(): List<TwelveHoursForDto> =
+    override suspend fun getRemTweHouFor(
+        locationKey: String, language: String, metric: Boolean
+    ): List<TwelveHoursForDto>? =
         twelveHoursForRem.getTwelveHoursFor(
-            key = "28580", //TODO
-            language = "en",
-            metric = true
-        ).twelveHoursForDto.orEmpty()
+            locationKey = locationKey,
+            language = language,
+            metric = metric
+        )?.body()
 
     override suspend fun getLocFor() {
         TODO("Not yet implemented")

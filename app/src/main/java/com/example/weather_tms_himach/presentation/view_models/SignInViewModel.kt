@@ -28,12 +28,12 @@ class SignInViewModel @Inject constructor(
 
     fun onSignIn(email: String, password: String) = viewModelScope.launch {
         try {
-            val user= auth.signIn(email = email, password = password)
+            val user= auth.signInWithEmailAndPassword(email = email, password = password)
             user.let {
                 _authUser.postValue(it)
             }
         } catch (e: Exception) {
-            eventsChanel.send(Events.Error(e.toString()))
+            eventsChanel.send(Events.Error)
         }
     }
 
@@ -46,6 +46,6 @@ class SignInViewModel @Inject constructor(
     }
 
     sealed class Events {
-        data class Error(val error: String) : Events()
+        object Error : Events()
     }
 }

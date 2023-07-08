@@ -1,9 +1,6 @@
 package com.example.weather_tms_himach.di.modules.repositories
 
-import com.example.weather_tms_himach.data.remote.api.CurrentConditionApi
-import com.example.weather_tms_himach.data.remote.api.FiveDaysForecastApi
-import com.example.weather_tms_himach.data.remote.api.GeolocationApi
-import com.example.weather_tms_himach.data.remote.api.TwelveHoursForecastApi
+import com.example.weather_tms_himach.data.remote.api.ForecastApi
 import com.example.weather_tms_himach.data.repositories.remote.current_condition_remote.CurrentCondRem
 import com.example.weather_tms_himach.data.repositories.remote.current_condition_remote.CurrentCondRemImpl
 import com.example.weather_tms_himach.data.repositories.remote.five_days_forecast_remote.FiveDaysForRem
@@ -20,25 +17,25 @@ class RemRepoModule {
 
     @Provides
     fun provideCurCondRem(
-        currentConditionApi: CurrentConditionApi
+        forecastApi: ForecastApi
     ): CurrentCondRem =
-        CurrentCondRemImpl(currentConditionApi)
+        CurrentCondRemImpl(forecastApi)
 
     @Provides
     fun provideFiveDaysForRem(
-        fiveDaysForecastApi: FiveDaysForecastApi
+        forecastApi: ForecastApi
     ): FiveDaysForRem =
-        FiveDaysForRemImpl(fiveDaysForecastApi)
+        FiveDaysForRemImpl(forecastApi)
 
     @Provides
     fun provideGeoRem(
-        geolocationApi: GeolocationApi
+        forecastApi: ForecastApi
     ): GeolocationRem =
-        GeolocationRemImpl(geolocationApi)
+        GeolocationRemImpl(forecastApi)
 
     @Provides
     fun provideTwelveHouForRem(
-        twelveHoursForecastApi: TwelveHoursForecastApi
+        forecastApi: ForecastApi
     ): TwelveHoursForRem =
-        TwelveHoursForRemImpl(twelveHoursForecastApi)
+        TwelveHoursForRemImpl(forecastApi)
 }

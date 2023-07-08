@@ -2,6 +2,7 @@ package com.example.weather_tms_himach.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.weather_tms_himach.presentation.view_models.ForecastViewModel
 import com.example.weather_tms_himach.presentation.view_models.SignUpViewModel
 import com.example.weather_tms_himach.presentation.view_models.SignInViewModel
 import dagger.Binds
@@ -23,4 +24,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(SignInViewModel::class)
     fun signInViewModel(viewModel: SignInViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ForecastViewModel::class)
+    fun forecastViewModel(viewModel: ForecastViewModel): ViewModel
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".presentation.fragments.login_fragments.SignInFragment">
+    tools:context=".presentation.fragments.SignInFragment">
 
     <TextView
         style="@style/TextAppearance.AppCompat.Body1"

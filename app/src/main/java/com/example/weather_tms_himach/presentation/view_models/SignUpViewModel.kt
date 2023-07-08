@@ -24,7 +24,7 @@ class SignUpViewModel @Inject constructor(
         email: String, password: String
     ) = viewModelScope.launch {
         try {
-            val newAccount = auth.createAccount(email = email, password = password)
+            val newAccount = auth.createUserWithEmailAndPassword(email = email, password = password)
             newAccount.let {
                 _accounts.postValue(it)
             }
