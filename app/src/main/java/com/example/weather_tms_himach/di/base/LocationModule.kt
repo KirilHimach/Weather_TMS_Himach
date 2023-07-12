@@ -16,17 +16,16 @@ import javax.inject.Singleton
 
 @Module
 object LocationModule {
-
     @Singleton
     @Provides
-    fun provideFusedLocationProviderClient(
+    internal fun provideFusedLocationProviderClient(
         context: Application
     ): FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(context)
 
     @Singleton
     @Provides
-    fun provideLocationRequest(): LocationRequest =
+    internal fun provideLocationRequest(): LocationRequest =
         LocationRequest
             .Builder(
                 Priority.PRIORITY_HIGH_ACCURACY,
@@ -36,7 +35,7 @@ object LocationModule {
 
     @Singleton
     @Provides
-    fun provideCurrentLocation(
+    internal fun provideCurrentLocation(
         context: Application,
         locationClient: FusedLocationProviderClient,
         locationRequest: LocationRequest

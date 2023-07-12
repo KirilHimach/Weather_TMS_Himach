@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.weather_tms_himach.R
 import com.example.weather_tms_himach.databinding.FragmentSignInBinding
 import com.example.weather_tms_himach.di.base.DaggerDaggerComponent
 import com.example.weather_tms_himach.di.modules.ViewModelFactory
 import com.example.weather_tms_himach.presentation.view_models.SignInViewModel
-import kotlinx.coroutines.launch
+import com.example.weather_tms_himach.utils.observeWithLifecycle
 import java.lang.IllegalStateException
 import javax.inject.Inject
-import kotlin.math.sign
 
 /**
  * This is the first fragment of the application.
@@ -25,11 +23,8 @@ import kotlin.math.sign
  */
 //TODO I`ll mace other functional after injection dependency
 class SignInFragment : Fragment() {
-
     private val mail = "sun@mail.com" //TODO real account on Firebase
     private val password = "qazQwsxc"  //TODO real account on Firebase
-
-    private lateinit var binding: FragmentSignInBinding
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -37,6 +32,7 @@ class SignInFragment : Fragment() {
     private val signInViewModel: SignInViewModel
         get() =
             _signInViewModel ?: throw IllegalStateException("SignInViewModel is not found")
+    private lateinit var binding: FragmentSignInBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +59,23 @@ class SignInFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        eventsObserver()
-        userObserver()
+        observeInputText()
+        onObserveCurrentUser()
+        onObserveAuthSignInEvents()
+    }
+
+    private fun onObserveCurrentUser() {
+        signInViewModel.uploadAuth()
+    }
+
+    private fun onObserveAuthSignInEvents() =
+        signInViewModel.getFirebaseUser().observeWithLifecycle(
+            fragment = this@SignInFragment,
+            action = ::signInEventsObserver
+        )
+
+
+    private fun observeInputText() {
         var login = ""
         binding.loginEditText.doAfterTextChanged { _login ->
             binding.loginView.error = null
@@ -89,21 +100,15 @@ class SignInFragment : Fragment() {
         signInViewModel.onSignIn(email = email, password = password)
     }
 
-    private fun userObserver() {
-        signInViewModel.authUser.observe(viewLifecycleOwner) { user ->
-            user?.let {
-                findNavController().navigate(R.id.action_SignInFragment_to_ForecastFragment)
+    private fun signInEventsObserver(event: SignInViewModel.AuthSignInEvent) {
+        when (event) {
+            is SignInViewModel.AuthSignInEvent.Default -> return
+            is SignInViewModel.AuthSignInEvent.Error -> {
+                binding.loginView.error = getString(R.string.username_incorrect)
+                signInViewModel.setDefaultEvent()
             }
-        }
-    }
-    private fun eventsObserver() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            signInViewModel.allEvents.collect() { error ->
-                when (error) {
-                    is SignInViewModel.Events.Error -> {
-                        binding.loginView.error = getString(R.string.username_incorrect)
-                    }
-                }
+            is SignInViewModel.AuthSignInEvent.InitAuthSignIn -> {
+                findNavController().navigate(R.id.action_SignInFragment_to_ForecastFragment)
             }
         }
     }

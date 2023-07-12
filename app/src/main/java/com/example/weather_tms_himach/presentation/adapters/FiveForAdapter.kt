@@ -38,7 +38,7 @@ class FiveForAdapter(
 
     override fun onBindViewHolder(holder: FiveForHolder, position: Int) {
         holder.apply {
-            day.text = getDay(items[position].dayOfWeek.orEmpty())
+            day.text = getDay(items[position].dayOfWeek.toString())
             minTemp.text = getConvertTemp(items[position].temperatureMin)
             maxTemp.text = getConvertTemp(items[position].temperatureMax)
             iconDay.apply {
@@ -68,13 +68,12 @@ class FiveForAdapter(
             )
         }
 
-    private fun getDay(dayOfWeek: String): String =
-        LocalDate.parse(
-            dayOfWeek,
-            DateTimeFormatter.ISO_OFFSET_DATE_TIME
-        ).format(DateTimeFormatter.ofPattern("E"))
-
-    companion object {
-        private const val DEGREE_SIGN = '\u00B0'
+    private fun getDay(dayOfWeek: String): String {
+        return if (dayOfWeek.isNotEmpty()) {
+            LocalDate.parse(
+                dayOfWeek,
+                DateTimeFormatter.ISO_OFFSET_DATE_TIME
+            ).format(DateTimeFormatter.ofPattern("E"))
+        } else ""
     }
 }

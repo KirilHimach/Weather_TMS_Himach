@@ -79,7 +79,6 @@ class ForecastViewModel @Inject constructor(
         currentLocation.removeUpdates(locationListener)
     }
 
-
     private suspend fun getGeolocationKey(latAndLon: String, langTag: String) {
         val geo = forecastUseCase.getGeo(
             latAndLon = latAndLon, language = langTag
@@ -87,7 +86,7 @@ class ForecastViewModel @Inject constructor(
         _geoChannel.send(GeoEvent.InitGeo(geo))
     }
 
-    fun uploadForecast(locationKey: String) {
+    internal fun uploadForecast(locationKey: String) {
         viewModelScope.launch {
             getCurrentCond(locationKey = locationKey, langTag = langTag)
             getFiveDaysFor(locationKey = locationKey, langTag = langTag, metric = metric)
@@ -157,7 +156,7 @@ class ForecastViewModel @Inject constructor(
             ForecastEvent()
     }
 
-    sealed class GeoEvent {
+    internal sealed class GeoEvent {
         data class InitGeo(val geo: Geolocation) : GeoEvent()
     }
 

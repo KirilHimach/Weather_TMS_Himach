@@ -16,19 +16,19 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideHttpClientLoginInterceptor() =
+    internal fun provideHttpClientLoginInterceptor() =
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
     @Singleton
     @Provides
-    fun provideConverter(): GsonConverterFactory =
+    internal fun provideConverter(): GsonConverterFactory =
         GsonConverterFactory.create()
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(
+    internal fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient
@@ -38,7 +38,7 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(
+    internal fun provideRetrofit(
         okHttpClient: OkHttpClient, converter: GsonConverterFactory
     ): Retrofit =
         Retrofit
@@ -50,6 +50,6 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideCurCondApi(retrofit: Retrofit): ForecastApi =
+    internal fun provideCurCondApi(retrofit: Retrofit): ForecastApi =
         retrofit.create(ForecastApi::class.java)
 }

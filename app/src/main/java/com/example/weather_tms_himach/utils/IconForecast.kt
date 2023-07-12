@@ -25,5 +25,5 @@ enum class IconForecast {
             }
         }
     };
-    abstract fun getIconForecast(value: Int?): Int
+    internal abstract fun getIconForecast(value: Int?): Int
 }

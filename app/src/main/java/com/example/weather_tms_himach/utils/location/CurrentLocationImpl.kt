@@ -21,7 +21,6 @@ class CurrentLocationImpl @Inject constructor(
     private val locationClient: FusedLocationProviderClient,
     private val locationRequest: LocationRequest
 ) : CurrentLocation {
-
     @SuppressLint("MissingPermission")
     @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun getLastLocation(): Location? {
@@ -36,21 +35,18 @@ class CurrentLocationImpl @Inject constructor(
                 addOnFailureListener {
                     cont.resume(null) {}
                 }
-                addOnCanceledListener {
-                    cont.cancel()
-                }
             }
         }
     }
 
     @SuppressLint("MissingPermission")
-    override suspend fun startLocationUpdates(locationListener: LocationListener) {
+    override suspend fun startLocationUpdates(listener: LocationListener) {
         if (!isAllowed()) {
             return
         }
         locationClient.requestLocationUpdates(
             locationRequest,
-            locationListener,
+            listener,
             Looper.getMainLooper()
         )
     }

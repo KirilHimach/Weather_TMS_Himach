@@ -3,18 +3,18 @@ package com.example.weather_tms_himach.di.base
 import android.app.Application
 import androidx.room.Room
 import com.example.weather_tms_himach.data.local.ForecastDatabase
-import com.example.weather_tms_himach.data.local.entities.City
-import com.example.weather_tms_himach.data.local.entities.FiveDaysFor
+import com.example.weather_tms_himach.data.local.ForecastStatistics
+import com.example.weather_tms_himach.data.local.StatisticsCity
+import com.example.weather_tms_himach.data.local.StatisticsParam
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
 object DBModule {
-
     @Singleton
     @Provides
-    fun provideDatabase(context: Application): ForecastDatabase =
+    internal fun provideDatabase(context: Application): ForecastDatabase =
         Room.databaseBuilder(
             context = context,
             klass = ForecastDatabase::class.java,
@@ -25,22 +25,12 @@ object DBModule {
 
     @Singleton
     @Provides
-    fun provideCityDao(db: ForecastDatabase) =
-        db.cityDao()
-
-    @Singleton
-    @Provides
-    fun provideFiveDaysForDao(db: ForecastDatabase) =
-        db.fiveDaysForecastDao()
-
-    @Singleton
-    @Provides
-    fun provideForecastDao(db:ForecastDatabase) =
-        db.forecastDao()
+    internal fun visitedSitesDao(db: ForecastDatabase) =
+        db.visitedSitesDao()
 
     @Provides
-    fun provideCityEnt() = City()
+    internal fun provideCityEntity() = StatisticsCity()
 
     @Provides
-    fun provideFiveDaysForEnt() = FiveDaysFor()
+    internal fun provideLocalCurrentCondEntity() = StatisticsParam()
 }

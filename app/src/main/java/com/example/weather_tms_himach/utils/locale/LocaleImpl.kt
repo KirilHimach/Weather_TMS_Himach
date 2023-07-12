@@ -10,7 +10,6 @@ import javax.inject.Inject
 class LocaleImpl @Inject constructor(
     private val resources: Configuration
 ) : Locale {
-
     override suspend fun getMainLanguageTag(): String =
         getFormatTag()
 

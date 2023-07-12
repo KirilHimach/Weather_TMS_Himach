@@ -24,4 +24,7 @@
     <string name="visibility">Visibility</string>
     <string name="pressure">Pressure</string>
     <string name="apparent">Apparent</string>
+    <string name="last_visited_sites">Last visited sites</string>
+    <string name="last_visited">Last visited:</string>
+    <string name="statistics">Statistics</string>
 </resources>

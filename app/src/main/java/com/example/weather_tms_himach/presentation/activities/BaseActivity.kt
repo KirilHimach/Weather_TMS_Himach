@@ -6,7 +6,6 @@ import com.example.weather_tms_himach.BuildConfig
 import com.example.weather_tms_himach.databinding.ActivityMainBinding
 
 class BaseActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

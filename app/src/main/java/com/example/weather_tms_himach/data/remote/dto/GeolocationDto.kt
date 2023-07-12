@@ -1,6 +1,6 @@
 package com.example.weather_tms_himach.data.remote.dto
 
-import com.example.weather_tms_himach.data.local.entities.City
+import com.example.weather_tms_himach.data.local.StatisticsCity
 import com.example.weather_tms_himach.domain.models.Geolocation
 import com.google.gson.annotations.SerializedName
 
@@ -12,18 +12,18 @@ import com.google.gson.annotations.SerializedName
  */
 data class GeolocationDto(
     @SerializedName("Key")
-    val locationKey: String,
+    val locationKey: String? = "0",
     @SerializedName("LocalizedName")
-    val city: String
+    val city: String? = ""
 )
 
-fun GeolocationDto.toLocalCity() =
-    City(
-        id = locationKey.toLong(),
+internal fun GeolocationDto.toLocalCity() =
+    StatisticsCity(
+        id = locationKey?.toLong(),
         city = city
     )
 
-fun GeolocationDto.toGeolocation() =
+internal fun GeolocationDto.toGeolocation() =
     Geolocation(
         locationKey = locationKey,
         city = city

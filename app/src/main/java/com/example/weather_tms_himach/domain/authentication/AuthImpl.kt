@@ -10,7 +10,6 @@ import kotlinx.coroutines.tasks.await
  * validate, or log out of an account.
  */
 class AuthImpl : Auth {
-
     override suspend fun signInWithEmailAndPassword(
         email: String, password: String
     ): FirebaseUser? {
@@ -25,7 +24,7 @@ class AuthImpl : Auth {
         return Firebase.auth.currentUser
     }
 
-    override fun signOut(): FirebaseUser? {
+    override suspend fun signOut(): FirebaseUser? {
         Firebase.auth.signOut()
         return Firebase.auth.currentUser
     }

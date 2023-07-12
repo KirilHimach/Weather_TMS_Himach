@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.weather_tms_himach.R
 import com.example.weather_tms_himach.databinding.FragmentSignUpBinding
 import com.example.weather_tms_himach.di.base.DaggerDaggerComponent
 import com.example.weather_tms_himach.di.modules.ViewModelFactory
 import com.example.weather_tms_himach.presentation.view_models.SignUpViewModel
-import kotlinx.coroutines.launch
+import com.example.weather_tms_himach.utils.observeWithLifecycle
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
@@ -22,15 +21,13 @@ import javax.inject.Inject
  * The user can be create account by login and password.
  */
 class SignUpFragment : Fragment() {
-
-    private lateinit var binding: FragmentSignUpBinding
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private var _signUpViewModel: SignUpViewModel? = null
     private val signUpViewModel: SignUpViewModel
         get() =
             _signUpViewModel ?: throw IllegalStateException("SignUpViewModel is not found")
+    private lateinit var binding: FragmentSignUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +58,17 @@ class SignUpFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        accountObserver()
-        eventsObserver()
+        observeInputText()
+        onObserveAuthSignUpEvents()
+    }
+
+    private fun onObserveAuthSignUpEvents() =
+        signUpViewModel.getNewUser().observeWithLifecycle(
+            fragment = this@SignUpFragment,
+            action = ::signUpEventsObserver
+        )
+
+    private fun observeInputText() {
         var login = ""
         var password = ""
         binding.loginEditText.doAfterTextChanged { _login ->
@@ -105,22 +111,16 @@ class SignUpFragment : Fragment() {
         return pattern.containsMatchIn(password) && password.length >= 8
     }
 
-    private fun accountObserver() {
-        signUpViewModel.accounts.observe(viewLifecycleOwner) { newAccount ->
-            newAccount?.let {
-                findNavController().navigate(R.id.action_SignUpFragment_to_ForecastFragment)
+    private fun signUpEventsObserver(event: SignUpViewModel.AuthSignUpEvent) {
+        when (event) {
+            is SignUpViewModel.AuthSignUpEvent.Default -> return
+            is SignUpViewModel.AuthSignUpEvent.Error -> {
+                binding.passwordView.error =
+                    getString(R.string.username_or_password_is_incorrect)
+                signUpViewModel.setDefaultEvent()
             }
-        }
-    }
-    private fun eventsObserver() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            signUpViewModel.allEvents.collect() { error ->
-                when (error) {
-                    is SignUpViewModel.Events.Error -> {
-                        binding.passwordView.error =
-                            getString(R.string.username_or_password_is_incorrect)
-                    }
-                }
+            is SignUpViewModel.AuthSignUpEvent.InitAuthSignUp -> {
+                findNavController().navigate(R.id.action_SignUpFragment_to_ForecastFragment)
             }
         }
     }

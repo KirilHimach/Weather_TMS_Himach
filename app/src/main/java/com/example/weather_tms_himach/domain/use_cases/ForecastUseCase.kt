@@ -19,32 +19,32 @@ class ForecastUseCase @Inject constructor(
     ): List<CurrentCondition> =
         weatherRepo.getRemCurCond(
             locationKey = locationKey, language = language
-        )?.map { currentCondition ->
+        ).map { currentCondition ->
             currentCondition.toCurrentCondition()
-        } ?: listOf(CurrentCondition())
+        }
 
     suspend fun getFiveDaysFor(
         locationKey: String, language: String, metric: Boolean
     ): List<FiveDaysForecast> =
         weatherRepo.getRemFiveDaysFor(
             locationKey = locationKey, language = language, metric = metric
-        )?.fiveDaysForecastDto?.map { fiveDaysForDto ->
+        ).fiveDaysForecastDto!!.map { fiveDaysForDto ->
             fiveDaysForDto.toFiveDaysForecast()
-        } ?: listOf(FiveDaysForecast())
+        }
 
     suspend fun getGeo(
         latAndLon: String, language: String
     ): Geolocation =
         weatherRepo.getRemGeo(
             latAndLon = latAndLon, language = language
-        )?.toGeolocation() ?: Geolocation()
+        ).toGeolocation()
 
     suspend fun getTwelveHouFor(
         locationKey: String, language: String, metric: Boolean
     ): List<TwelveHoursForecast> =
         weatherRepo.getRemTweHouFor(
             locationKey = locationKey, language = language, metric = metric
-        )?.map { forecast ->
+        ).map { forecast ->
             forecast.toTwelveHoursForecast()
-        } ?: listOf(TwelveHoursForecast())
+        }
 }

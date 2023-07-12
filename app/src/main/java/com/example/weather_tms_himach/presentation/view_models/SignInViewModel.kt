@@ -1,51 +1,61 @@
 package com.example.weather_tms_himach.presentation.view_models
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weather_tms_himach.domain.authentication.Auth
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 class SignInViewModel @Inject constructor(
     private val auth: Auth
 ) : ViewModel() {
-    private val _authUser = MutableLiveData<FirebaseUser>()
-    val authUser: LiveData<FirebaseUser> = _authUser
-    private val eventsChanel = Channel<Events>()
-    val allEvents = eventsChanel.receiveAsFlow()
+    private val authSignInEvent: MutableStateFlow<AuthSignInEvent> =
+        MutableStateFlow(value = AuthSignInEvent.Default)
 
-    init {
-        viewModelScope.launch {
-            isCurrentUser()
-        }
+    internal fun getFirebaseUser(): Flow<AuthSignInEvent> = authSignInEvent
+
+    internal fun uploadAuth() {
+        viewModelScope.launch { isCurrentUser() }
     }
 
-    fun onSignIn(email: String, password: String) = viewModelScope.launch {
+    internal fun setDefaultEvent() {
+        onAuthSignInEventHandled(AuthSignInEvent.Default)
+    }
+
+    internal fun onSignIn(email: String, password: String) = viewModelScope.launch {
         try {
-            val user= auth.signInWithEmailAndPassword(email = email, password = password)
-            user.let {
-                _authUser.postValue(it)
+            val user = auth.signInWithEmailAndPassword(email = email, password = password)
+            if (user != null) {
+                onAuthSignInEventHandled(AuthSignInEvent.InitAuthSignIn(user))
+            } else {
+                onAuthSignInEventHandled(AuthSignInEvent.Error)
             }
-        } catch (e: Exception) {
-            eventsChanel.send(Events.Error)
+        } catch (e: FirebaseException) {
+            onAuthSignInEventHandled(AuthSignInEvent.Error)
         }
     }
 
-    fun onSignOut() = viewModelScope.launch {
+    internal fun onSignOut() = viewModelScope.launch {
         auth.signOut()
     }
 
     private suspend fun isCurrentUser() {
-        _authUser.value = auth.getUser()
+        val currentUser = auth.getUser()
+        if (currentUser != null) {
+            onAuthSignInEventHandled(AuthSignInEvent.InitAuthSignIn(currentUser))
+        }
     }
 
-    sealed class Events {
-        object Error : Events()
+    private fun onAuthSignInEventHandled(event: AuthSignInEvent) =
+        viewModelScope.launch { authSignInEvent.emit(event) }
+
+    internal sealed class AuthSignInEvent {
+        object Default : AuthSignInEvent()
+        object Error : AuthSignInEvent()
+        data class InitAuthSignIn(val user: FirebaseUser) : AuthSignInEvent()
     }
 }

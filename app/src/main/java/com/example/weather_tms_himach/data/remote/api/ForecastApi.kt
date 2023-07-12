@@ -11,8 +11,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ForecastApi {
-
-    companion object {
+    private companion object {
         const val KEY_PARAM = "apikey"
         const val API_KEY = BuildConfig.API_KEY
         const val LANGUAGE_PARAM = "language"

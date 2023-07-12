@@ -8,9 +8,8 @@ import javax.inject.Singleton
 
 @Module
 object AuthModule {
-
     @Singleton
     @Provides
-    fun provideAuth(): Auth =
+    internal fun provideAuth(): Auth =
         AuthImpl()
 }

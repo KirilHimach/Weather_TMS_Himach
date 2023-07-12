@@ -14,27 +14,26 @@ import dagger.Provides
 
 @Module
 class RemRepoModule {
-
     @Provides
-    fun provideCurCondRem(
+    internal fun provideCurCondRem(
         forecastApi: ForecastApi
     ): CurrentCondRem =
         CurrentCondRemImpl(forecastApi)
 
     @Provides
-    fun provideFiveDaysForRem(
+    internal fun provideFiveDaysForRem(
         forecastApi: ForecastApi
     ): FiveDaysForRem =
         FiveDaysForRemImpl(forecastApi)
 
     @Provides
-    fun provideGeoRem(
+    internal fun provideGeoRem(
         forecastApi: ForecastApi
     ): GeolocationRem =
         GeolocationRemImpl(forecastApi)
 
     @Provides
-    fun provideTwelveHouForRem(
+    internal fun provideTwelveHouForRem(
         forecastApi: ForecastApi
     ): TwelveHoursForRem =
         TwelveHoursForRemImpl(forecastApi)

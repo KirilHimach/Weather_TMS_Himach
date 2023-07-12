@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weather_tms_himach.R
@@ -26,13 +27,12 @@ import javax.inject.Inject
 
 
 class ForecastFragment : Fragment() {
-
-    private lateinit var binding: FragmentForecastBinding
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private var _forecastViewModel: ForecastViewModel? = null
     private val forecastViewModel: ForecastViewModel
         get() = _forecastViewModel ?: throw IllegalStateException("ForecastViewModel is not found")
+    private lateinit var binding: FragmentForecastBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +54,12 @@ class ForecastFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         onObserveForEvents()
         onObserveGeo()
+
+
+        //TODO
+        binding.testButton.setOnClickListener {
+            findNavController().navigate(R.id.action_ForecastFragment_to_VisitedSitesFragment)
+        }
     }
 
     private fun onObserveGeo() {
@@ -69,12 +75,12 @@ class ForecastFragment : Fragment() {
         }
     }
 
-    private fun onObserveForEvents() {
+    private fun onObserveForEvents() =
         forecastViewModel.getEventForecast().observeWithLifecycle(
             fragment = this@ForecastFragment,
             action = ::handelEvent
         )
-    }
+
 
     private fun handelEvent(event: ForecastViewModel.ForecastEvent) {
         when(event) {

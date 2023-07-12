@@ -8,25 +8,25 @@ import com.google.gson.annotations.SerializedName
  */
 data class TwelveHoursForDto(
     @SerializedName("DateTime")
-    val dateTime: String,
+    val dateTime: String? = "",
     @SerializedName("WeatherIcon")
-    val weatherIcon: Int,
+    val weatherIcon: Int? = 0,
     @SerializedName("Temperature")
-    val temperature: Temperature
+    val temperature: Temperature? = Temperature()
 ) {
     data class Temperature(
         @SerializedName("Value")
-        val value: Double
+        val value: Double? = 0.0
     )
 }
 
-fun TwelveHoursForDto.toTwelveHoursForecast(): TwelveHoursForecast {
+internal fun TwelveHoursForDto.toTwelveHoursForecast(): TwelveHoursForecast {
     val dateFormat = dateTime
-        .substringAfter("T")
-        .substringBefore(":")
+        ?.substringAfter("T")
+        ?.substringBefore(":")
     return TwelveHoursForecast(
         date = dateFormat,
         weatherIcon = weatherIcon,
-        temperature = temperature.value
+        temperature = temperature?.value
     )
 }

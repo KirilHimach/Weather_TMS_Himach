@@ -36,7 +36,16 @@
         android:id="@+id/ForecastFragment"
         android:name="com.example.weather_tms_himach.presentation.fragments.ForecastFragment"
         android:label="@string/forecast"
-        tools:layout="@layout/fragment_forecast" />
+        tools:layout="@layout/fragment_forecast" >
+        <action
+            android:id="@+id/action_ForecastFragment_to_VisitedSitesFragment"
+            app:destination="@id/VisitedSitesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/VisitedSitesFragment"
+        android:name="com.example.weather_tms_himach.presentation.fragments.VisitedSitesFragment"
+        android:label="@string/statistics"
+        tools:layout="@layout/fragment_visited_sites" />
 
 
 </navigation>

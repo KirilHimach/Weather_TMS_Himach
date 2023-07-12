@@ -10,14 +10,13 @@ import javax.inject.Singleton
 
 @Module
 object ResourcesModule {
-
     @Singleton
     @Provides
-    fun provideResources(): Configuration =
+    internal fun provideResources(): Configuration =
         Resources.getSystem().configuration
 
     @Singleton
     @Provides
-    fun provideLocale(configuration: Configuration): Locale =
+    internal fun provideLocale(configuration: Configuration): Locale =
         LocaleImpl(configuration)
 }
