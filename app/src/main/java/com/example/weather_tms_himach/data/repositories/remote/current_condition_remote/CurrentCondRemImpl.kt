@@ -5,13 +5,14 @@ import com.example.weather_tms_himach.data.remote.dto.CurrentCondDto
 import retrofit2.Response
 import javax.inject.Inject
 
-class CurrentCondRemImpl @Inject constructor(
+internal class CurrentCondRemImpl @Inject constructor(
     private val forecastApi: ForecastApi
 ) : CurrentCondRem {
     override suspend fun getCurrentCond(
-        locationKey: String, language: String
+        locationKey: String,
+        language: String
     ): Response<List<CurrentCondDto>>? =
-        forecastApi.getCurrentCondition(
+        forecastApi.getListCurrentCondition(
             locationKey = locationKey,
             language = language
         )

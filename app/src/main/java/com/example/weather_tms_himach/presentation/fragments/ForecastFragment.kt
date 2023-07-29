@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weather_tms_himach.R
@@ -16,17 +15,16 @@ import com.example.weather_tms_himach.di.modules.ViewModelFactory
 import com.example.weather_tms_himach.domain.models.CurrentCondition
 import com.example.weather_tms_himach.domain.models.FiveDaysForecast
 import com.example.weather_tms_himach.domain.models.TwelveHoursForecast
+import com.example.weather_tms_himach.presentation.activity.BaseActivity
 import com.example.weather_tms_himach.presentation.adapters.FiveForAdapter
 import com.example.weather_tms_himach.presentation.adapters.TwelveForAdapter
 import com.example.weather_tms_himach.presentation.view_models.ForecastViewModel
 import com.example.weather_tms_himach.utils.observeWithLifecycle
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
-
-class ForecastFragment : Fragment() {
+internal class ForecastFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private var _forecastViewModel: ForecastViewModel? = null
@@ -52,23 +50,32 @@ class ForecastFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        onObserveLastLocation()
         onObserveForEvents()
         onObserveGeo()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        val baseActivity = activity as BaseActivity
+        baseActivity.setBottomNavViewVisibility(View.VISIBLE)
+    }
 
-        //TODO
-        binding.testButton.setOnClickListener {
-            findNavController().navigate(R.id.action_ForecastFragment_to_VisitedSitesFragment)
-        }
+    private fun onObserveLastLocation() {
+        forecastViewModel.uploadLocation()
     }
 
     private fun onObserveGeo() {
         viewLifecycleOwner.lifecycleScope.launch {
-            forecastViewModel.geoChannel.collect() {
-                when(it) {
+            forecastViewModel.geoChannel.collect() { geoEvent ->
+                when (geoEvent) {
                     is ForecastViewModel.GeoEvent.InitGeo -> {
-                        it.geo.locationKey?.let { key -> forecastViewModel.uploadForecast(key) }
-                        it.geo.city?.let { city -> onSetGeo(city) }
+                        geoEvent.geo.locationKey?.let { key ->
+                            forecastViewModel.uploadForecast(key)
+                        }
+                        geoEvent.geo.city?.let { city ->
+                            onSetGeo(city)
+                        }
                     }
                 }
             }
@@ -81,9 +88,8 @@ class ForecastFragment : Fragment() {
             action = ::handelEvent
         )
 
-
     private fun handelEvent(event: ForecastViewModel.ForecastEvent) {
-        when(event) {
+        when (event) {
             is ForecastViewModel.ForecastEvent.Default -> return
             is ForecastViewModel.ForecastEvent.InitCurrentCondition -> {
                 onSetCurrentCond(event.currentCondition)
@@ -131,7 +137,8 @@ class ForecastFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = fiveDaysFor?.let {
                 FiveForAdapter(
-                    items = it, context = context
+                    items = fiveDaysFor,
+                    context = context
                 )
             }
         }
@@ -144,7 +151,8 @@ class ForecastFragment : Fragment() {
             )
             adapter = twelveHoursForecast?.let {
                 TwelveForAdapter(
-                    items = it, context = context
+                    items = twelveHoursForecast,
+                    context = context
                 )
             }
         }

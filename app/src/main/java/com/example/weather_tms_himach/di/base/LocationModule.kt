@@ -4,9 +4,7 @@ import android.app.Application
 import com.example.weather_tms_himach.utils.location.CurrentLocation
 import com.example.weather_tms_himach.utils.location.CurrentLocationImpl
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import dagger.Module
@@ -15,7 +13,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-object LocationModule {
+internal object LocationModule {
     @Singleton
     @Provides
     internal fun provideFusedLocationProviderClient(

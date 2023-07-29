@@ -1,23 +1,25 @@
 package com.example.weather_tms_himach.data.remote.dto
 
+import com.example.weather_tms_himach.data.remote.dto.twelve_hours_for_nesteds.TwelveHoursForTempDto
 import com.example.weather_tms_himach.domain.models.TwelveHoursForecast
 import com.google.gson.annotations.SerializedName
 
-/**
- * This model serves to deserialize the 12-hour forecast of the weather.
- */
-data class TwelveHoursForDto(
+internal data class TwelveHoursForDto(
     @SerializedName("DateTime")
-    val dateTime: String? = "",
+    val dateTime: String?,
     @SerializedName("WeatherIcon")
-    val weatherIcon: Int? = 0,
+    val weatherIcon: Int?,
     @SerializedName("Temperature")
-    val temperature: Temperature? = Temperature()
+    val temperature: TwelveHoursForTempDto?
 ) {
-    data class Temperature(
-        @SerializedName("Value")
-        val value: Double? = 0.0
-    )
+    internal companion object {
+        fun empty(): TwelveHoursForDto =
+            TwelveHoursForDto(
+                dateTime = "",
+                weatherIcon = 0,
+                temperature = TwelveHoursForTempDto.empty()
+            )
+    }
 }
 
 internal fun TwelveHoursForDto.toTwelveHoursForecast(): TwelveHoursForecast {

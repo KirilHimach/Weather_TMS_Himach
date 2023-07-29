@@ -16,7 +16,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
 
-class CurrentLocationImpl @Inject constructor(
+internal class CurrentLocationImpl @Inject constructor(
     private val context: Application,
     private val locationClient: FusedLocationProviderClient,
     private val locationRequest: LocationRequest
@@ -24,7 +24,7 @@ class CurrentLocationImpl @Inject constructor(
     @SuppressLint("MissingPermission")
     @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun getLastLocation(): Location? {
-        if (!isAllowed()) {
+        if (!isGranted()) {
             return null
         }
         return suspendCancellableCoroutine { cont ->
@@ -41,7 +41,7 @@ class CurrentLocationImpl @Inject constructor(
 
     @SuppressLint("MissingPermission")
     override suspend fun startLocationUpdates(listener: LocationListener) {
-        if (!isAllowed()) {
+        if (!isGranted()) {
             return
         }
         locationClient.requestLocationUpdates(
@@ -55,7 +55,7 @@ class CurrentLocationImpl @Inject constructor(
         locationClient.removeLocationUpdates(locationListener)
     }
 
-    private fun isAllowed(): Boolean {
+    private fun isGranted(): Boolean {
         val hasAccessFineLocationPermission = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_FINE_LOCATION

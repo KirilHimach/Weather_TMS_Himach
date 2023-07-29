@@ -11,7 +11,7 @@ import com.example.weather_tms_himach.databinding.ItemTwelveForBinding
 import com.example.weather_tms_himach.domain.models.TwelveHoursForecast
 import com.example.weather_tms_himach.utils.IconForecast
 
-class TwelveForAdapter(
+internal class TwelveForAdapter(
     private val items: List<TwelveHoursForecast>,
     private val context: Context
 ) : RecyclerView.Adapter<TwelveForAdapter.TwelveForHolder>() {
@@ -50,7 +50,7 @@ class TwelveForAdapter(
     }
 
     private fun getIcon(icon: Int?): Int =
-        IconForecast.ICONS.getIconForecast(icon)
+        IconForecast.ICON.getIconForecast(icon)
 
     private fun getConvertTemp(temp: Double?): String =
         buildString {

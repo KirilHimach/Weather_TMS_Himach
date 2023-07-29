@@ -8,7 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-inline fun <reified T> Flow<T>.observeWithLifecycle(
+internal inline fun <reified T> Flow<T>.observeWithLifecycle(
     fragment: Fragment,
     noinline action: suspend (T) -> Unit,
     mainActiveState: Lifecycle.State = Lifecycle.State.STARTED

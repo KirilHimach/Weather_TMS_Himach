@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Weather_TMS_Himach</string>
-    <string name="username_or_email">Username or email</string>
-    <string name="password">Password</string>
-    <string name="weather">WEATHER</string>
+    <string name="username_or_email" translatable="false">Username or email</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="weather" translatable="false">WEATHER</string>
     <string name="log_in">Log In</string>
     <string name="at_least_8_characters_and_one_in_upper_case">At least 8 characters and one in upper case</string>
     <string name="create_account">Create an account</string>
     <string name="username_incorrect">Username is incorrect!</string>
     <string name="username_or_password_is_incorrect">Username or password is incorrect!</string>
     <string name="create_my_account">Create my account</string>
-    <string name="sign_in">SignIn</string>
-    <string name="sign_up">SignUp</string>
-    <string name="forecast">Forecast</string>
-    <string name="email">email@</string>
+    <string name="sign_in" translatable="false">SignIn</string>
+    <string name="sign_up" translatable="false">SignUp</string>
+    <string name="forecast_fragment" translatable="false">ForecastFragment</string>
+    <string name="email" translatable="false">email@</string>
     <string name="twelve_hours_forecast">Forecast for 12 hours</string>
     <string name="forecast_for_5_days">Forecast for 5 days</string>
-    <string name="degree_sign">\u00B0</string>
-    <string name="percent">\u0025</string>
+    <string name="degree_sign" translatable="false">\u00B0</string>
+    <string name="percent" translatable="false">\u0025</string>
     <string name="uv_index">UV-index</string>
     <string name="humidity">Humidity</string>
     <string name="wind">Wind</string>
@@ -26,5 +26,7 @@
     <string name="apparent">Apparent</string>
     <string name="last_visited_sites">Last visited sites</string>
     <string name="last_visited">Last visited:</string>
+    <string name="statistics_fragment" translatable="false">StatisticsFragment</string>
+    <string name="forecast">Forecast</string>
     <string name="statistics">Statistics</string>
 </resources>

@@ -1,10 +1,11 @@
 package com.example.weather_tms_himach.data.repositories.remote.geolocation_remote
 
-import com.example.weather_tms_himach.data.remote.dto.GeolocationDto
+import com.example.weather_tms_himach.data.remote.dto.CityApiDto
 import retrofit2.Response
 
-interface GeolocationRem {
+internal interface GeolocationRem {
     suspend fun getGeo(
-        latAndLon: String, language: String
-    ): Response<GeolocationDto>?
+        latAndLon: String,
+        language: String
+    ): Response<CityApiDto>?
 }

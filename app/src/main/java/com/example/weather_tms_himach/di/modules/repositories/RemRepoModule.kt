@@ -13,7 +13,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class RemRepoModule {
+internal class RemRepoModule {
     @Provides
     internal fun provideCurCondRem(
         forecastApi: ForecastApi

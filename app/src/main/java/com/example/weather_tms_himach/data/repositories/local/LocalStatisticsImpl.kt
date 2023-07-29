@@ -1,28 +1,20 @@
 package com.example.weather_tms_himach.data.repositories.local
 
 import com.example.weather_tms_himach.data.local.ForecastStatistics
-import com.example.weather_tms_himach.data.local.StatisticsCity
-import com.example.weather_tms_himach.data.local.StatisticsParam
-import com.example.weather_tms_himach.data.local.StatisticsDao
+import com.example.weather_tms_himach.data.local.entites.CityStatisticsEntity
+import com.example.weather_tms_himach.data.local.entites.ParamStatisticsEntity
+import com.example.weather_tms_himach.data.local.ForecastStatisticsDao
 import javax.inject.Inject
 
-class LocalStatisticsImpl @Inject constructor(
-    private val statisticsDao: StatisticsDao
+internal class LocalStatisticsImpl @Inject constructor(
+    private val forecastStatisticsDao: ForecastStatisticsDao
 ) : LocalStatistics {
-    override suspend fun insertStatisticsCity(statisticsCity: StatisticsCity?) =
-        statisticsDao.insertStatisticsCity(statisticsCity = statisticsCity)
+    override suspend fun insertCityStatistics(cityStatisticsEntity: CityStatisticsEntity?) =
+        forecastStatisticsDao.insertStatisticsCity(cityStatisticsEntity = cityStatisticsEntity)
 
-    override suspend fun insertStatisticsParam(statisticParams: List<StatisticsParam>?) =
-        statisticsDao.insertStatisticsParam(statisticParams = statisticParams)
+    override suspend fun insertParamStatistics(statisticParams: List<ParamStatisticsEntity>?) =
+        forecastStatisticsDao.insertStatisticsParam(statisticParams = statisticParams)
 
-    override suspend fun getAll(): List<ForecastStatistics>? =
-        statisticsDao.getAll()
-
-    override suspend fun deleteAllStatistics() {
-        statisticsDao.deleteAllVisitedCites()
-        statisticsDao.deleteAllStatisticsParam()
-    }
-
-    override suspend fun deleteParamById(id: Long?) =
-        statisticsDao.deleteParamById(id = id)
+    override suspend fun getAllStatistics(): List<ForecastStatistics>? = //TODO
+        forecastStatisticsDao.getAllStatistics()
 }

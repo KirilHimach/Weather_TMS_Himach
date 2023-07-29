@@ -1,6 +1,6 @@
 package com.example.weather_tms_himach.di.modules.repositories
 
-import com.example.weather_tms_himach.data.repositories.DataRepositoryImpl
+import com.example.weather_tms_himach.data.repositories.WeatherRepoImpl
 import com.example.weather_tms_himach.data.repositories.local.LocalStatistics
 import com.example.weather_tms_himach.data.repositories.remote.current_condition_remote.CurrentCondRem
 import com.example.weather_tms_himach.data.repositories.remote.five_days_forecast_remote.FiveDaysForRem
@@ -11,7 +11,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class DataRepoModule {
+internal class DataRepoModule {
     @Provides
     internal fun provideWeatherRepo(
         currentCondRem: CurrentCondRem,
@@ -20,7 +20,7 @@ class DataRepoModule {
         twelveHoursForRem: TwelveHoursForRem,
         cityLocal: LocalStatistics
     ): WeatherRepo =
-        DataRepositoryImpl(
+        WeatherRepoImpl(
             currentCondRem = currentCondRem,
             fiveDaysForRem = fiveDaysForRem,
             geolocationRem = geolocationRem,

@@ -1,6 +1,5 @@
 package com.example.weather_tms_himach.presentation.view_models
 
-
 import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,7 +19,7 @@ import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import javax.inject.Inject
 
-class ForecastViewModel @Inject constructor(
+internal class ForecastViewModel @Inject constructor(
     private val forecastUseCase: ForecastUseCase,
     private val currentLocation: CurrentLocation,
     private val mainLocale: Locale
@@ -35,7 +34,7 @@ class ForecastViewModel @Inject constructor(
     private lateinit var locationListener: LocationListener
     private lateinit var langTag: String
 
-    init {
+    internal fun uploadLocation() {
         viewModelScope.launch {
             onObserveLocation()
             getLastLocation()
@@ -45,13 +44,21 @@ class ForecastViewModel @Inject constructor(
 
     internal fun getEventForecast(): Flow<ForecastEvent> = eventForecast
 
+    internal fun uploadForecast(locationKey: String) {
+        viewModelScope.launch {
+            getCurrentCond(locationKey = locationKey, langTag = langTag)
+            getFiveDaysFor(locationKey = locationKey, langTag = langTag, metric = metric)
+            getTwelveFor(locationKey = locationKey, langTag = langTag, metric = metric)
+        }
+    }
+
     private suspend fun onObserveLocation() {
         viewModelScope.launch {
-            locationChannel.collect() {
-                when (it) {
+            locationChannel.collect() { locationEvent ->
+                when (locationEvent) {
                     is LocationEvent.InitLocation -> {
                         getGeolocationKey(
-                            latAndLon = getFormatLatLon(it.location),
+                            latAndLon = getFormatLatLon(locationEvent.location),
                             langTag = langTag
                         )
                     }
@@ -80,17 +87,13 @@ class ForecastViewModel @Inject constructor(
     }
 
     private suspend fun getGeolocationKey(latAndLon: String, langTag: String) {
-        val geo = forecastUseCase.getGeo(
-            latAndLon = latAndLon, language = langTag
-        )
-        _geoChannel.send(GeoEvent.InitGeo(geo))
-    }
-
-    internal fun uploadForecast(locationKey: String) {
-        viewModelScope.launch {
-            getCurrentCond(locationKey = locationKey, langTag = langTag)
-            getFiveDaysFor(locationKey = locationKey, langTag = langTag, metric = metric)
-            getTwelveFor(locationKey = locationKey, langTag = langTag, metric = metric)
+        try {
+            val geo = forecastUseCase.getGeo(
+                latAndLon = latAndLon, language = langTag
+            )
+            _geoChannel.send(GeoEvent.InitGeo(geo))
+        } catch (e: Exception) {
+            uploadLocation()
         }
     }
 
@@ -144,12 +147,10 @@ class ForecastViewModel @Inject constructor(
         data class InitFiveForAdapter(
             val fiveDaysFor: List<FiveDaysForecast>
         ) : ForecastEvent()
-
         data class InitTwelveForAdapter(
             val twelveHoursFor: List<TwelveHoursForecast>
         ) :
             ForecastEvent()
-
         data class InitCurrentCondition(
             val currentCondition: List<CurrentCondition>
         ) :

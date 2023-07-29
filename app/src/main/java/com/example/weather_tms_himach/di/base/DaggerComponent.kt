@@ -29,7 +29,7 @@ import javax.inject.Singleton
         ResourcesModule::class
     ]
 )
-interface DaggerComponent {
+internal interface DaggerComponent {
     fun inject(fragment: SignUpFragment)
     fun inject(fragment: SignInFragment)
     fun inject(fragment: ForecastFragment)

@@ -9,7 +9,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-object ResourcesModule {
+internal object ResourcesModule {
     @Singleton
     @Provides
     internal fun provideResources(): Configuration =

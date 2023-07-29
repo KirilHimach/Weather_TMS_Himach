@@ -1,101 +1,53 @@
 package com.example.weather_tms_himach.data.remote.dto
 
 
-import com.example.weather_tms_himach.data.local.StatisticsParam
+import com.example.weather_tms_himach.data.local.entites.ParamStatisticsEntity
+import com.example.weather_tms_himach.data.remote.dto.cur_cond_nesteds.ApparentTemperatureDto
+import com.example.weather_tms_himach.data.remote.dto.cur_cond_nesteds.PressureDto
+import com.example.weather_tms_himach.data.remote.dto.cur_cond_nesteds.RealFeelTemperatureDto
+import com.example.weather_tms_himach.data.remote.dto.cur_cond_nesteds.VisibilityDto
+import com.example.weather_tms_himach.data.remote.dto.cur_cond_nesteds.WindDto
 import com.example.weather_tms_himach.domain.models.CurrentCondition
 import com.google.gson.annotations.SerializedName
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-/**
- * This model serves to deserialize the current state of the weather.
- * The "Wind" contains two formats, Metric(km/h) and Imperial(mi/h).
- * The "RealFeelTemperature" contains two formats, Metric(C) and Imperial(F).
- * The "Visibility" contains two formats, Metric(km) and Imperial(mi).
- * The "Pressure" contains two formats, Metric(md) and Imperial(inHg).
- * WeatherText - "Sunny".
- */
-data class CurrentCondDto(
+internal data class CurrentCondDto(
     @SerializedName("WeatherText")
-    val weatherText: String? = "",
+    val weatherText: String?,
     @SerializedName("WeatherIcon")
-    val weatherIcon: Int? = 0,
+    val weatherIcon: Int?,
     @SerializedName("RealFeelTemperature")
-    val realFeelTemperature: RealFeelTemperature? = RealFeelTemperature(),
+    val realFeelTemperatureDto: RealFeelTemperatureDto?,
     @SerializedName("RelativeHumidity")
-    val relativeHumidity: Int? = 0,
+    val relativeHumidity: Int?,
     @SerializedName("Wind")
-    val wind: Wind? = Wind(),
+    val windDto: WindDto?,
     @SerializedName("UVIndex")
-    val uVIndex: Int? = 0,
+    val uVIndex: Int?,
     @SerializedName("Visibility")
-    val visibility: Visibility? = Visibility(),
+    val visibilityDto: VisibilityDto?,
     @SerializedName("Pressure")
-    val pressure: Pressure? = Pressure(),
+    val pressureDto: PressureDto?,
     @SerializedName("ApparentTemperature")
-    val apparentTemperature: ApparentTemperature? = ApparentTemperature(),
+    val apparentTemperatureDto: ApparentTemperatureDto?,
     @SerializedName("Link")
-    val link: String? = ""
+    val link: String?
 ) {
-    data class RealFeelTemperature(
-        @SerializedName("Metric")
-        val metric: Metric? = Metric()
-    ) {
-        data class Metric(
-            @SerializedName("Value")
-            val value: Double? = 0.0,
-            @SerializedName("Unit")
-            val unit: String? = ""
-        )
-    }
-    data class Wind(
-        @SerializedName("Speed")
-        val speed: Speed? = Speed()
-    ) {
-        data class Speed(
-            @SerializedName("Metric")
-            val metric: Metric? = Metric()
-        ) {
-            data class Metric(
-                @SerializedName("Value")
-                val value: Double? = 0.0,
-                @SerializedName("Unit")
-                val unit: String? = ""
+    internal companion object {
+        fun empty(): CurrentCondDto =
+            CurrentCondDto(
+                weatherText = "",
+                weatherIcon = 0,
+                realFeelTemperatureDto = RealFeelTemperatureDto.empty(),
+                relativeHumidity = 0,
+                windDto = WindDto.empty(),
+                uVIndex = 0,
+                visibilityDto = VisibilityDto.empty(),
+                pressureDto = PressureDto.empty(),
+                apparentTemperatureDto = ApparentTemperatureDto.empty(),
+                link = ""
             )
-        }
-    }
-    data class Visibility(
-        @SerializedName("Metric")
-        val metric: Metric? = Metric()
-    ) {
-        data class Metric(
-            @SerializedName("Value")
-            val value: Double? = 0.0,
-            @SerializedName("Unit")
-            val unit: String? = ""
-        )
-    }
-    data class Pressure(
-        @SerializedName("Metric")
-        val metric: Metric? = Metric()
-    ) {
-        data class Metric(
-            @SerializedName("Value")
-            val value: Double? = 0.0,
-            @SerializedName("Unit")
-            val unit: String? = ""
-        )
-    }
-    data class ApparentTemperature(
-        @SerializedName("Metric")
-        val metric: Metric? = Metric()
-    ) {
-        data class Metric(
-            @SerializedName("Value")
-            val value: Double? = 0.0,
-            @SerializedName("Unit")
-            val unit: String? = ""
-        )
     }
 }
 
@@ -103,32 +55,32 @@ internal fun CurrentCondDto.toCurrentCondition() =
     CurrentCondition(
         weatherText = weatherText,
         weatherIcon = weatherIcon,
-        realFellTempMetVal = realFeelTemperature?.metric?.value,
-        realFellTempMetUn = realFeelTemperature?.metric?.unit,
+        realFellTempMetVal = realFeelTemperatureDto?.metricDto?.value,
+        realFellTempMetUn = realFeelTemperatureDto?.metricDto?.unit,
         relativeHumidity = relativeHumidity,
-        windSpeedMetVal = wind?.speed?.metric?.value,
-        windSpeedMetUn = wind?.speed?.metric?.unit,
+        windSpeedMetVal = windDto?.speedDto?.metricDto?.value,
+        windSpeedMetUn = windDto?.speedDto?.metricDto?.unit,
         uVIndex = uVIndex,
-        visibilityMetVal = visibility?.metric?.value,
-        visibilityMetUn = visibility?.metric?.unit,
-        pressureMetVal = pressure?.metric?.value,
-        pressureMetUn = pressure?.metric?.unit,
-        apparentTempMetVal = apparentTemperature?.metric?.value,
-        apparentTempMetUn = apparentTemperature?.metric?.unit
+        visibilityMetVal = visibilityDto?.metricDto?.value,
+        visibilityMetUn = visibilityDto?.metricDto?.unit,
+        pressureMetVal = pressureDto?.metricDto?.value,
+        pressureMetUn = pressureDto?.metricDto?.unit,
+        apparentTempMetVal = apparentTemperatureDto?.metricDto?.value,
+        apparentTempMetUn = apparentTemperatureDto?.metricDto?.unit
     )
 
-internal fun CurrentCondDto.toLocalCurrentCond(): StatisticsParam {
+internal fun CurrentCondDto.toParamStatisticsEntity(): ParamStatisticsEntity {
     val locationKey = link
         ?.substringBefore("?")
         ?.substringAfterLast("/")
         ?.toLong()
     val date = LocalDateTime.now()
     val pattern = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:hh")
-    return StatisticsParam(
-        locationKey = locationKey,
-        weatherText = weatherText,
-        weatherIcon = weatherIcon,
-        temp = realFeelTemperature?.metric?.value,
+    return ParamStatisticsEntity(
+        locationKey = locationKey!!,
+        weatherText = weatherText!!,
+        weatherIcon = weatherIcon!!,
+        temp = realFeelTemperatureDto?.metricDto?.value!!,
         date = date.format(pattern)
     )
 }

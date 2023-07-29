@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-object ApiModule {
+internal object ApiModule {
     private const val BASE_URL = BuildConfig.BASE_URL
 
     @Singleton

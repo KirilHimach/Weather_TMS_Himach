@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weather_TMS_Himach</string>
+    <string name="log_in">Вход</string>
+    <string name="at_least_8_characters_and_one_in_upper_case">Минимум 8 символов и не менее одного в верхнем регистре</string>
+    <string name="create_account">Создать аккаунт</string>
+    <string name="username_incorrect">Неверный логин!</string>
+    <string name="username_or_password_is_incorrect">Неверный логин или пароль</string>
+    <string name="create_my_account">Создать аккаунт</string>
+    <string name="twelve_hours_forecast">Прогноз на 12 часов</string>
+    <string name="forecast_for_5_days">Прогноз на 5 дней</string>
+    <string name="uv_index">УФ-индекс</string>
+    <string name="humidity">Влажность</string>
+    <string name="wind">Ветер</string>
+    <string name="visibility">Видимость</string>
+    <string name="pressure">Давление</string>
+    <string name="apparent">Ощущается как</string>
+    <string name="last_visited_sites">Список посещаемых мест</string>
+    <string name="last_visited">Последнее посещение:</string>
+    <string name="statistics">Статистика</string>
+    <string name="forecast">Прогноз</string>
+</resources>

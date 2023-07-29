@@ -13,7 +13,7 @@ import com.example.weather_tms_himach.utils.IconForecast
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class FiveForAdapter(
+internal class FiveForAdapter(
     private val items: List<FiveDaysForecast>,
     private val context: Context
 ) : RecyclerView.Adapter<FiveForAdapter.FiveForHolder>() {
@@ -58,7 +58,7 @@ class FiveForAdapter(
         items.size
 
     private fun getIcon(icon: Int?): Int =
-        IconForecast.ICONS.getIconForecast(icon)
+        IconForecast.ICON.getIconForecast(icon)
 
     private fun getConvertTemp(temp: Double?): String =
         buildString {

@@ -35,17 +35,12 @@
     <fragment
         android:id="@+id/ForecastFragment"
         android:name="com.example.weather_tms_himach.presentation.fragments.ForecastFragment"
-        android:label="@string/forecast"
+        android:label="@string/forecast_fragment"
         tools:layout="@layout/fragment_forecast" >
-        <action
-            android:id="@+id/action_ForecastFragment_to_VisitedSitesFragment"
-            app:destination="@id/VisitedSitesFragment" />
     </fragment>
     <fragment
         android:id="@+id/VisitedSitesFragment"
         android:name="com.example.weather_tms_himach.presentation.fragments.VisitedSitesFragment"
-        android:label="@string/statistics"
+        android:label="@string/statistics_fragment"
         tools:layout="@layout/fragment_visited_sites" />
-
-
 </navigation>

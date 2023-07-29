@@ -1,8 +1,8 @@
-package com.example.weather_tms_himach.domain.authentication
+package com.example.weather_tms_himach.utils.authentication
 
 import com.google.firebase.auth.FirebaseUser
 
-interface Auth {
+internal interface Auth {
     suspend fun signInWithEmailAndPassword(email: String, password: String): FirebaseUser?
     suspend fun createUserWithEmailAndPassword(email: String, password: String): FirebaseUser?
     suspend fun signOut(): FirebaseUser?

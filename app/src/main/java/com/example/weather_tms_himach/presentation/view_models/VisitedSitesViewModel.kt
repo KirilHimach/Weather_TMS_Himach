@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class VisitedSitesViewModel @Inject constructor(
+internal class VisitedSitesViewModel @Inject constructor(
     private val visitedSitesUseCase: VisitedSitesUseCase
 ) : ViewModel() {
     private val statisticsEvent: MutableStateFlow<StatisticsEvent> =
@@ -19,13 +19,6 @@ class VisitedSitesViewModel @Inject constructor(
 
     internal fun uploadVisitedSites() =
         viewModelScope.launch { getAllStatistics() }
-
-    internal suspend fun deleteAllStatistics() = //TODO
-        visitedSitesUseCase.onDeleteAllStatistics()
-
-    internal suspend fun deleteParamById(id: Long) = //TODO
-        visitedSitesUseCase.onDeleteStatisticsParamById(id = id)
-
 
     private fun onStatisticsEventHandled(event: StatisticsEvent) =
         viewModelScope.launch { statisticsEvent.emit(event) }

@@ -1,7 +1,6 @@
 package com.example.weather_tms_himach.domain.models
 
-
-data class VisitedCityStatistics(
+internal data class VisitedCityStatistics(
   val city: String? = "",
   val weatherText: String? = "",
   val icon: Int? = 0,

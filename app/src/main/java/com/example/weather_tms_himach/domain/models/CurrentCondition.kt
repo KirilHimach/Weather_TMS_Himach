@@ -1,6 +1,6 @@
 package com.example.weather_tms_himach.domain.models
 
-data class CurrentCondition(
+internal data class CurrentCondition(
     val weatherText: String? = "",
     val weatherIcon: Int? = 0,
     val realFellTempMetVal: Double? = 0.0,

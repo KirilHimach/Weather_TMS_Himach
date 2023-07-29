@@ -11,7 +11,7 @@ import com.example.weather_tms_himach.databinding.ItemLastVisitedSitesBinding
 import com.example.weather_tms_himach.domain.models.VisitedCityStatistics
 import com.example.weather_tms_himach.utils.IconForecast
 
-class VisitedSitesAdapter(
+internal class VisitedSitesAdapter(
     private val items: List<VisitedCityStatistics>,
     private val context: Context
 ) : RecyclerView.Adapter<VisitedSitesAdapter.VisitedSitesHolder>() {
@@ -47,7 +47,7 @@ class VisitedSitesAdapter(
     }
 
     private fun getIcon(icon: Int?): Int =
-        IconForecast.ICONS.getIconForecast(icon)
+        IconForecast.ICON.getIconForecast(icon)
 
     private fun getConvertTemp(temp: Double?): String =
         buildString {

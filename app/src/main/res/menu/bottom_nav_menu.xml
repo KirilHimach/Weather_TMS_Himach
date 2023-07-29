@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ForecastFragment"
+        android:icon="@drawable/icon_home"
+        android:title="@string/forecast" />
+
+    <item
+        android:id="@+id/VisitedSitesFragment"
+        android:icon="@drawable/icon_storage"
+        android:title="@string/statistics" />
+</menu>

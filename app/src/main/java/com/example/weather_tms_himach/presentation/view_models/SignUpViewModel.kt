@@ -2,7 +2,7 @@ package com.example.weather_tms_himach.presentation.view_models
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather_tms_himach.domain.authentication.Auth
+import com.example.weather_tms_himach.utils.authentication.Auth
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SignUpViewModel @Inject constructor(
+internal class SignUpViewModel @Inject constructor(
     private val auth: Auth
 ) : ViewModel() {
     private val authSignUpEvent: MutableStateFlow<AuthSignUpEvent> =

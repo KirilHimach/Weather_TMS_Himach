@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class UseCasesModule {
+internal class UseCasesModule {
     @Provides
     internal fun provideForecastUseCase(weatherRepo: WeatherRepo) =
         ForecastUseCase(weatherRepo)

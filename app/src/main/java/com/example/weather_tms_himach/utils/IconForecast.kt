@@ -2,8 +2,8 @@ package com.example.weather_tms_himach.utils
 
 import com.example.weather_tms_himach.R
 
-enum class IconForecast {
-    ICONS {
+internal enum class IconForecast {
+    ICON {
         override fun getIconForecast(value: Int?): Int {
             when (value) {
                 1 -> return R.drawable.icon_1

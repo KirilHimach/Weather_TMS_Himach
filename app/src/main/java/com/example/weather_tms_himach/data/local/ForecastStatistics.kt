@@ -1,26 +1,22 @@
 package com.example.weather_tms_himach.data.local
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.PrimaryKey
-import androidx.room.Relation
 import com.example.weather_tms_himach.domain.models.VisitedCityStatistics
-import kotlin.reflect.KClass
 
-data class ForecastStatistics(
+internal data class ForecastStatistics(
     @ColumnInfo(name = "city")
-    val city: String? = "",
+    val city: String?,
     @ColumnInfo(name = "weather_text")
-    val weatherText: String? = "",
+    val weatherText: String?,
     @ColumnInfo(name = "weather_icon")
-    val icon: Int? = 0,
+    val icon: Int?,
     @ColumnInfo(name = "temp")
-    val temp: Double? = 0.0,
+    val temp: Double?,
     @ColumnInfo(name = "date")
-    val date: String? = ""
+    val date: String?
 )
 
-internal fun ForecastStatistics.visitedCityStatistics() =
+internal fun ForecastStatistics.toVisitedCityStatistics() = 
     VisitedCityStatistics(
         city = city,
         weatherText = weatherText,

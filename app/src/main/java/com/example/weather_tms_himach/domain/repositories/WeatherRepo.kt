@@ -2,30 +2,26 @@ package com.example.weather_tms_himach.domain.repositories
 
 import com.example.weather_tms_himach.data.local.ForecastStatistics
 import com.example.weather_tms_himach.data.remote.dto.CurrentCondDto
-import com.example.weather_tms_himach.data.remote.dto.FiveDaysForDto
-import com.example.weather_tms_himach.data.remote.dto.GeolocationDto
+import com.example.weather_tms_himach.data.remote.dto.FiveDaysForListDto
+import com.example.weather_tms_himach.data.remote.dto.CityApiDto
 import com.example.weather_tms_himach.data.remote.dto.TwelveHoursForDto
 
-
-interface WeatherRepo {
-    suspend fun getRemCurCond(
+internal interface WeatherRepo {
+    suspend fun getCurCondRem(
         locationKey: String, language: String
     ): List<CurrentCondDto>
 
-    suspend fun getRemFiveDaysFor(
+    suspend fun getFiveDaysForRem(
         locationKey: String, language: String, metric: Boolean
-    ): FiveDaysForDto
+    ): FiveDaysForListDto
 
-    suspend fun getRemGeo(
+    suspend fun getCityApiRem(
         latAndLon: String, language: String
-    ): GeolocationDto
+    ): CityApiDto
 
-    suspend fun getRemTweHouFor(
+    suspend fun getTweHouForRem(
         locationKey: String, language: String, metric: Boolean
     ): List<TwelveHoursForDto>
 
-    suspend fun getAllStatistics(): List<ForecastStatistics>
-
-    suspend fun onDeleteAllStatistics()
-    suspend fun onDeleteStatisticsParamById(id: Long)
+    suspend fun getAllStatisticsLocal(): List<ForecastStatistics>
 }

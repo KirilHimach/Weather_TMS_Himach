@@ -5,13 +5,15 @@ import com.example.weather_tms_himach.data.remote.dto.TwelveHoursForDto
 import retrofit2.Response
 import javax.inject.Inject
 
-class TwelveHoursForRemImpl @Inject constructor(
+internal class TwelveHoursForRemImpl @Inject constructor(
     private val forecastApi: ForecastApi
 ) : TwelveHoursForRem {
     override suspend fun getTwelveHoursFor(
-        locationKey: String, language: String, metric: Boolean
+        locationKey: String,
+        language: String,
+        metric: Boolean
     ): Response<List<TwelveHoursForDto>>? =
-        forecastApi.getTwelveHoursForecast(
+        forecastApi.getListTwelveHoursForecast(
             locationKey = locationKey,
             language = language,
             metric = metric

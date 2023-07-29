@@ -2,22 +2,19 @@ package com.example.weather_tms_himach.di.base
 
 import android.app.Application
 import androidx.room.Room
-import com.example.weather_tms_himach.data.local.ForecastDatabase
-import com.example.weather_tms_himach.data.local.ForecastStatistics
-import com.example.weather_tms_himach.data.local.StatisticsCity
-import com.example.weather_tms_himach.data.local.StatisticsParam
+import com.example.weather_tms_himach.data.local.ForecastStatisticsDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-object DBModule {
+internal object DBModule {
     @Singleton
     @Provides
-    internal fun provideDatabase(context: Application): ForecastDatabase =
+    internal fun provideDatabase(context: Application): ForecastStatisticsDatabase =
         Room.databaseBuilder(
             context = context,
-            klass = ForecastDatabase::class.java,
+            klass = ForecastStatisticsDatabase::class.java,
             name = "weather_tms"
         )
             .fallbackToDestructiveMigration()
@@ -25,12 +22,6 @@ object DBModule {
 
     @Singleton
     @Provides
-    internal fun visitedSitesDao(db: ForecastDatabase) =
+    internal fun visitedSitesDao(db: ForecastStatisticsDatabase) =
         db.visitedSitesDao()
-
-    @Provides
-    internal fun provideCityEntity() = StatisticsCity()
-
-    @Provides
-    internal fun provideLocalCurrentCondEntity() = StatisticsParam()
 }

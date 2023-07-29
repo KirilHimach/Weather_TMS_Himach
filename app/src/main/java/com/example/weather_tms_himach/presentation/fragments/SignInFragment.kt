@@ -11,21 +11,13 @@ import com.example.weather_tms_himach.R
 import com.example.weather_tms_himach.databinding.FragmentSignInBinding
 import com.example.weather_tms_himach.di.base.DaggerDaggerComponent
 import com.example.weather_tms_himach.di.modules.ViewModelFactory
+import com.example.weather_tms_himach.presentation.activity.BaseActivity
 import com.example.weather_tms_himach.presentation.view_models.SignInViewModel
 import com.example.weather_tms_himach.utils.observeWithLifecycle
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
-/**
- * This is the first fragment of the application.
- * The user can be authenticated by login
- * or skip this fragment if the current user is not null.
- */
-//TODO I`ll mace other functional after injection dependency
-class SignInFragment : Fragment() {
-    private val mail = "sun@mail.com" //TODO real account on Firebase
-    private val password = "qazQwsxc"  //TODO real account on Firebase
-
+internal class SignInFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private var _signInViewModel: SignInViewModel? = null
@@ -51,12 +43,6 @@ class SignInFragment : Fragment() {
         return binding.root
     }
 
-    /**
-     * This method checks the current user.
-     * If the current user exists,
-     * the method will automatically move to the next fragment.
-     * After a simple test, this method activates the LogInBtn.
-     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeInputText()
@@ -74,29 +60,26 @@ class SignInFragment : Fragment() {
             action = ::signInEventsObserver
         )
 
-
     private fun observeInputText() {
         var login = ""
+        var password = ""
         binding.loginEditText.doAfterTextChanged { _login ->
             binding.loginView.error = null
             login = _login.toString()
             binding.logInBtn.isEnabled = login.isNotEmpty()
         }
+        binding.passwordEditText.doAfterTextChanged { _password ->
+            password = _password.toString()
+        }
         binding.logInBtn.setOnClickListener {
-            onSignIn(login)
+            onSignIn(login, password)
         }
         binding.createBtn.setOnClickListener {
-            //findNavController().navigate(R.id.action_SignInFragment_to_SignUpFragment)
-            //TODO
-            findNavController().navigate(R.id.action_SignInFragment_to_ForecastFragment)
+            findNavController().navigate(R.id.action_SignInFragment_to_SignUpFragment)
         }
     }
 
-    /**
-     * This method makes a request to the firebase,
-     * if the user exists, it will automatically move to the next fragment.
-     */
-    private fun onSignIn(email: String) {
+    private fun onSignIn(email: String, password: String) {
         signInViewModel.onSignIn(email = email, password = password)
     }
 

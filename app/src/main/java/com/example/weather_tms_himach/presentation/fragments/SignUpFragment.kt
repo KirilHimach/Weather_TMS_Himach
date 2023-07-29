@@ -11,16 +11,13 @@ import com.example.weather_tms_himach.R
 import com.example.weather_tms_himach.databinding.FragmentSignUpBinding
 import com.example.weather_tms_himach.di.base.DaggerDaggerComponent
 import com.example.weather_tms_himach.di.modules.ViewModelFactory
+import com.example.weather_tms_himach.presentation.activity.BaseActivity
 import com.example.weather_tms_himach.presentation.view_models.SignUpViewModel
 import com.example.weather_tms_himach.utils.observeWithLifecycle
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
-/**
- * This is the second fragment of the application.
- * The user can be create account by login and password.
- */
-class SignUpFragment : Fragment() {
+internal class SignUpFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private var _signUpViewModel: SignUpViewModel? = null
@@ -37,6 +34,12 @@ class SignUpFragment : Fragment() {
         _signUpViewModel = viewModelFactory.create(SignUpViewModel::class.java)
     }
 
+    override fun onResume() {
+        super.onResume()
+        val baseActivity = activity as BaseActivity
+        baseActivity.setBottomNavViewVisibility(View.INVISIBLE)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,13 +52,6 @@ class SignUpFragment : Fragment() {
         return binding.root
     }
 
-    /**
-     * This method does a simple validation of the entered
-     * data and activates the createBtn.
-     * When the user clicks the button, the data
-     * will be sent for verification.
-     * Hints are provided for comfortable use of this fragment.
-     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeInputText()
@@ -86,26 +82,15 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    /**
-     * This method makes a request to the firebase,
-     * if the data is entered correctly,
-     * it will automatically move to the next fragment.
-     */
     private fun onCreateAccount(email: String, password: String) {
         signUpViewModel.onSignUp(email = email, password = password)
     }
 
-    /**
-     * Simple validation login and password.
-     */
     private fun onBtnEnable(login: String, password: String) {
         binding.createBtn.isEnabled =
             login.isNotEmpty() && isCheckPassword(password)
     }
 
-    /**
-     * Simple password validation.
-     */
     private fun isCheckPassword(password: String): Boolean {
         val pattern = "[A-Z]".toRegex()
         return pattern.containsMatchIn(password) && password.length >= 8

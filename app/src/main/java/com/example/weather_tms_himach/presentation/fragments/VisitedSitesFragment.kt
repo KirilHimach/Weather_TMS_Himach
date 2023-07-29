@@ -6,20 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.weather_tms_himach.R
-import com.example.weather_tms_himach.data.remote.api.ForecastApi
 import com.example.weather_tms_himach.databinding.FragmentVisitedSitesBinding
 import com.example.weather_tms_himach.di.base.DaggerDaggerComponent
 import com.example.weather_tms_himach.di.modules.ViewModelFactory
 import com.example.weather_tms_himach.domain.models.VisitedCityStatistics
+import com.example.weather_tms_himach.presentation.activity.BaseActivity
 import com.example.weather_tms_himach.presentation.adapters.VisitedSitesAdapter
 import com.example.weather_tms_himach.presentation.view_models.VisitedSitesViewModel
 import com.example.weather_tms_himach.utils.observeWithLifecycle
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
-
-class VisitedSitesFragment : Fragment() {
+internal class VisitedSitesFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private var _visitedCitesViewModel: VisitedSitesViewModel? = null
@@ -49,6 +47,12 @@ class VisitedSitesFragment : Fragment() {
         onObserveStatisticsEvent()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val baseActivity = activity as BaseActivity
+        baseActivity.setBottomNavViewVisibility(View.VISIBLE)
+    }
+
     private fun onObserveSites() =
         visitedCitesViewModel.uploadVisitedSites()
 
@@ -57,7 +61,6 @@ class VisitedSitesFragment : Fragment() {
             fragment = this@VisitedSitesFragment,
             action = ::handleStatisticsEvent
         )
-
 
     private fun handleStatisticsEvent(event: VisitedSitesViewModel.StatisticsEvent) {
         when(event) {

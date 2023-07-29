@@ -1,7 +1,7 @@
 package com.example.weather_tms_himach.domain.use_cases
 
+import com.example.weather_tms_himach.data.remote.dto.five_days_for_nesteds.toFiveDaysForecast
 import com.example.weather_tms_himach.data.remote.dto.toCurrentCondition
-import com.example.weather_tms_himach.data.remote.dto.toFiveDaysForecast
 import com.example.weather_tms_himach.data.remote.dto.toGeolocation
 import com.example.weather_tms_himach.data.remote.dto.toTwelveHoursForecast
 import com.example.weather_tms_himach.domain.models.CurrentCondition
@@ -11,13 +11,13 @@ import com.example.weather_tms_himach.domain.models.TwelveHoursForecast
 import com.example.weather_tms_himach.domain.repositories.WeatherRepo
 import javax.inject.Inject
 
-class ForecastUseCase @Inject constructor(
+internal class ForecastUseCase @Inject constructor(
     private val weatherRepo: WeatherRepo
 ) {
     suspend fun getCurCond(
         locationKey: String, language: String
     ): List<CurrentCondition> =
-        weatherRepo.getRemCurCond(
+        weatherRepo.getCurCondRem(
             locationKey = locationKey, language = language
         ).map { currentCondition ->
             currentCondition.toCurrentCondition()
@@ -26,23 +26,23 @@ class ForecastUseCase @Inject constructor(
     suspend fun getFiveDaysFor(
         locationKey: String, language: String, metric: Boolean
     ): List<FiveDaysForecast> =
-        weatherRepo.getRemFiveDaysFor(
+        weatherRepo.getFiveDaysForRem(
             locationKey = locationKey, language = language, metric = metric
-        ).fiveDaysForecastDto!!.map { fiveDaysForDto ->
+        ).fiveDaysForecastDtoDto!!.map { fiveDaysForDto ->
             fiveDaysForDto.toFiveDaysForecast()
         }
 
     suspend fun getGeo(
         latAndLon: String, language: String
     ): Geolocation =
-        weatherRepo.getRemGeo(
+        weatherRepo.getCityApiRem(
             latAndLon = latAndLon, language = language
         ).toGeolocation()
 
     suspend fun getTwelveHouFor(
         locationKey: String, language: String, metric: Boolean
     ): List<TwelveHoursForecast> =
-        weatherRepo.getRemTweHouFor(
+        weatherRepo.getTweHouForRem(
             locationKey = locationKey, language = language, metric = metric
         ).map { forecast ->
             forecast.toTwelveHoursForecast()
