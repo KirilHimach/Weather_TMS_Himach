@@ -32,7 +32,13 @@ internal class SignInFragment : Fragment() {
             DaggerDaggerComponent.factory().create(it).inject(this)
         }
         _signInViewModel = viewModelFactory.create(SignInViewModel::class.java)
-        signInViewModel.onSignOut() //TODO: Log out
+        signInViewModel.onSignOut()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val baseActivity = activity as BaseActivity
+        baseActivity.setBottomNavViewVisibility(View.INVISIBLE)
     }
 
     override fun onCreateView(
